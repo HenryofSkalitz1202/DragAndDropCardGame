@@ -1,8 +1,8 @@
 package com.hbd.Kartu.Makhluk;
 
-public class Karnivora extends Hewan{
+public class Karnivora extends Hewan {
 
-    public Karnivora(String nama, int maksPanen){
-        super(nama, maksPanen);
+    public Karnivora(String nama, int maksPanen, String hasilPanen) {
+        super(nama, maksPanen, hasilPanen);
     }
 }
