@@ -1,8 +1,8 @@
 package com.hbd.Kartu.Produk;
 
-public class ProdukTanaman extends Produk{
+public class ProdukTanaman extends Produk {
 
-    public ProdukTanaman(String nama, int harga){
-        super(nama, harga);
+    public ProdukTanaman(String nama, int harga, int tambahanBerat) {
+        super(nama, harga, tambahanBerat);
     }
 }
