@@ -13,6 +13,7 @@ public class Deck {
 
         // buat 10 kartu Hewan, 10 kartu tanaman. 5 kartu ProdukHewan, 5 kartu
         // ProdukTanaman, 10 kartu item
+        // ini contoh aja, kan takutnya gacha shufflenya jelek
         for (int i = 0; i < 10; i++) {
             ArrayList<String> data = FactoryKartu.dataHewan.get((int) (Math.random() * FactoryKartu.dataHewan.size()));
             String jenisHewan = data.get(0);

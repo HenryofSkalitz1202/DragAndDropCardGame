@@ -1,6 +1,7 @@
 package com.hbd.Kartu.Makhluk;
 
 import com.hbd.Kartu.Kartu;
+import com.hbd.Kartu.Produk.Produk;
 
 public abstract class Makhluk extends Kartu {
     private int progressPanen;
@@ -29,4 +30,6 @@ public abstract class Makhluk extends Kartu {
     public void setProgressPanen(int progressPanen) {
         this.progressPanen = progressPanen;
     }
+
+    public abstract Produk panen();
 }

@@ -1,5 +1,8 @@
 package com.hbd.Kartu.Makhluk;
 
+import com.hbd.Kartu.Produk.ProdukTanaman;
+import com.hbd.Kartu.FactoryKartu;
+
 public class Tanaman extends Makhluk {
 
     public Tanaman(String nama, int maksPanen, String hasilPanen) {
@@ -16,6 +19,11 @@ public class Tanaman extends Makhluk {
 
     public int getUmurPanen() {
         return this.getMaksPanen();
+    }
+
+    @Override
+    public ProdukTanaman panen() {
+        return (ProdukTanaman) FactoryKartu.getKartu(this.getHasilPanen());
     }
 
 }
