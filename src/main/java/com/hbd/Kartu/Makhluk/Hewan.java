@@ -17,5 +17,4 @@ public abstract class Hewan extends Makhluk {
     public int getBeratPanen() {
         return this.getMaksPanen();
     }
-
 }
