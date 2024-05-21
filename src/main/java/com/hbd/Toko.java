@@ -22,11 +22,9 @@ import com.hbd.Kartu.Kartu;
 public class Toko {
     private static Toko instance;
     private HashMap<Kartu, Integer> mapItem;
-    private int banyakItem;
 
     private Toko() {
         this.mapItem = new HashMap<Kartu, Integer>();
-        this.banyakItem = 0;
     }
 
     private Toko(String pathFileGameState) {
@@ -57,13 +55,14 @@ public class Toko {
 
     // inisiasi toko dari gamestate.txt
     private void initTokoFromGameState(String pathFileGameState) {
+
         try {
             File myObj = new File(pathFileGameState);
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // skip line 1 (turn saat ini)
-            setBanyakItemDiToko(Integer.parseInt(myReader.nextLine()));
+            int banyakItemDiToko = Integer.parseInt(myReader.nextLine());
 
-            for (int i = 0; i < getBanyakItemDiToko(); i++) {
+            for (int i = 0; i < banyakItemDiToko; i++) {
                 String dataItem = myReader.nextLine();
                 String[] dataItemSplit = dataItem.split(" ");
                 Kartu item = FactoryKartu.getKartu(dataItemSplit[0]);
@@ -86,15 +85,23 @@ public class Toko {
         } else {
             mapItem.put(item, 1);
         }
-        setBanyakItemDiToko(getBanyakItemDiToko() + 1);
     }
 
-    public int getBanyakItemDiToko() {
-        return this.banyakItem;
+    public HashMap<Kartu, Integer> getMapItem() {
+        return this.mapItem;
     }
 
-    public void setBanyakItemDiToko(int banyakItem) {
-        this.banyakItem = banyakItem;
-    }
+    public Kartu beliItem(String namaItem) {
+        Kartu item = FactoryKartu.getKartu(namaItem);
+        if (mapItem.containsKey(item)) {
+            mapItem.put(item, mapItem.get(item) - 1);
+            if (mapItem.get(item) == 0) {
+                mapItem.remove(item);
+            }
+        } else {
+            item = null;
+        }
 
+        return item;
+    }
 }
