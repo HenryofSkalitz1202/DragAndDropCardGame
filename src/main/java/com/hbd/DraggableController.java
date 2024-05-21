@@ -146,7 +146,7 @@ public class DraggableController implements Initializable {
         ladang.add(l11); ladang.add(l12); ladang.add(l13); ladang.add(l14); ladang.add(l15);
         ladang.add(l21); ladang.add(l22); ladang.add(l23); ladang.add(l24); ladang.add(l25);
         ladang.add(l31); ladang.add(l32); ladang.add(l33); ladang.add(l34); ladang.add(l35);
-        ladang.add(l41); ladang.add(l41); ladang.add(l43); ladang.add(l44); ladang.add(l45);
+        ladang.add(l41); ladang.add(l42); ladang.add(l43); ladang.add(l44); ladang.add(l45);
 
         dek_aktif = new ArrayList<PetakDeck>();
         PetakDeck d1 = new PetakDeck(active_deck_1.getX(), active_deck_1.getY(), active_deck_1.getWidth(), active_deck_1.getHeight(), active_deck_1);
