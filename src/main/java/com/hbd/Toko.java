@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import com.hbd.Kartu.FactoryKartu;
-import com.hbd.Kartu.Kartu;
+import com.hbd.Kartu.Produk.Produk;
 
 /**
  * Kelas Toko (Singleton)
@@ -21,14 +21,14 @@ import com.hbd.Kartu.Kartu;
  */
 public class Toko {
     private static Toko instance;
-    private HashMap<Kartu, Integer> mapItem;
+    private HashMap<Produk, Integer> mapItem;
 
     private Toko() {
-        this.mapItem = new HashMap<Kartu, Integer>();
+        this.mapItem = new HashMap<Produk, Integer>();
     }
 
     private Toko(String pathFileGameState) {
-        this.mapItem = new HashMap<Kartu, Integer>();
+        this.mapItem = new HashMap<Produk, Integer>();
         initTokoFromGameState(pathFileGameState);
     }
 
@@ -65,7 +65,7 @@ public class Toko {
             for (int i = 0; i < banyakItemDiToko; i++) {
                 String dataItem = myReader.nextLine();
                 String[] dataItemSplit = dataItem.split(" ");
-                Kartu item = FactoryKartu.getKartu(dataItemSplit[0]);
+                Produk item = (Produk) FactoryKartu.getKartu(dataItemSplit[0]);
                 int banyakItem = Integer.parseInt(dataItemSplit[1]);
                 for (int j = 0; j < banyakItem; j++) {
                     tambahItemKeToko(item);
@@ -79,7 +79,7 @@ public class Toko {
         }
     }
 
-    public void tambahItemKeToko(Kartu item) {
+    public void tambahItemKeToko(Produk item) {
         if (mapItem.containsKey(item)) {
             mapItem.put(item, mapItem.get(item) + 1);
         } else {
@@ -87,12 +87,12 @@ public class Toko {
         }
     }
 
-    public HashMap<Kartu, Integer> getMapItem() {
+    public HashMap<Produk, Integer> getMapItem() {
         return this.mapItem;
     }
 
-    public Kartu beliItem(String namaItem) {
-        Kartu item = FactoryKartu.getKartu(namaItem);
+    public Produk beliItem(String namaItem) {
+        Produk item = (Produk) FactoryKartu.getKartu(namaItem);
         if (mapItem.containsKey(item)) {
             mapItem.put(item, mapItem.get(item) - 1);
             if (mapItem.get(item) == 0) {
