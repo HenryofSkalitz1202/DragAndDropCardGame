@@ -4,7 +4,7 @@ import com.hbd.Kartu.Kartu;
 
 public class Item extends Kartu {
 
-    public Item(String nama){
-        super(nama);
+    public Item(String nama, String imagePath){
+        super(nama, imagePath);
     }
 }

@@ -5,8 +5,8 @@ import com.hbd.Kartu.Produk.ProdukHewan;
 
 public abstract class Hewan extends Makhluk {
 
-    public Hewan(String nama, int maksPanen, String hasilPanen) {
-        super(nama, maksPanen, hasilPanen);
+    public Hewan(String nama, String imagePath, int maksPanen, String hasilPanen) {
+        super(nama, imagePath, maksPanen, hasilPanen);
     }
 
     public int getBerat() {
