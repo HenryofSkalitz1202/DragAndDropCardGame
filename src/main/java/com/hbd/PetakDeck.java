@@ -3,7 +3,7 @@ package com.hbd;
 import com.hbd.Kartu.Kartu;
 import javafx.scene.shape.Rectangle;
 
-public class Ladang {
+public class PetakDeck {
     private double x;
     private double y;
     private double h;
@@ -11,7 +11,7 @@ public class Ladang {
     private Rectangle rect;
     private Kartu item;
 
-    public Ladang(double x, double y, double w, double h, Rectangle rect) {
+    public PetakDeck(double x, double y, double w, double h, Rectangle rect) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -23,5 +23,13 @@ public class Ladang {
 
     public double getY() {return this.y;}
 
-    public Kartu getCurrentKartu() {return this.item;}
+    public double getH() {return this.h;}
+
+    public double getW() {return this.w;}
+
+    public void setItem(Kartu k) {this.item = k;}
+
+    public Kartu getItem() {return this.item;}
+
+    public void removeItem() {this.item = null;}
 }
