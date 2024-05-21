@@ -2,6 +2,7 @@ package com.hbd.Kartu.Makhluk;
 
 import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Produk.Produk;
+import javafx.scene.shape.Rectangle;
 
 public abstract class Makhluk extends Kartu {
     private int progressPanen;
@@ -9,7 +10,7 @@ public abstract class Makhluk extends Kartu {
     private final String hasilPanen;
 
     public Makhluk(String nama, int maksPanen, String hasilPanen) {
-        super(nama);
+        super(nama,1 , 2, 3, 4, new Rectangle());
         this.progressPanen = 0;
         this.maksPanen = maksPanen;
         this.hasilPanen = hasilPanen;
