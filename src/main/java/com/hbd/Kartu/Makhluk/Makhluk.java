@@ -8,8 +8,8 @@ public abstract class Makhluk extends Kartu {
     private final int maksPanen;
     private final String hasilPanen;
 
-    public Makhluk(String nama, String imagePath, int maksPanen, String hasilPanen) {
-        super(nama, imagePath);
+    public Makhluk(String nama, int maksPanen, String hasilPanen) {
+        super(nama);
         this.progressPanen = 0;
         this.maksPanen = maksPanen;
         this.hasilPanen = hasilPanen;

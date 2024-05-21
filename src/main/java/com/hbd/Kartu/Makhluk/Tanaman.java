@@ -5,8 +5,8 @@ import com.hbd.Kartu.FactoryKartu;
 
 public class Tanaman extends Makhluk {
 
-    public Tanaman(String nama, String imagePath, int maksPanen, String hasilPanen) {
-        super(nama, imagePath, maksPanen, hasilPanen);
+    public Tanaman(String nama, int maksPanen, String hasilPanen) {
+        super(nama, maksPanen, hasilPanen);
     }
 
     public int getUmur() {

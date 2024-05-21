@@ -13,121 +13,169 @@ public class FactoryKartu {
     public static ArrayList<ArrayList<String>> dataHewan = new ArrayList<>() {
         {
             // jenis, nama, maksPanen, hasilPanen
-            add(new ArrayList<>(Arrays.asList("Karnivora", "Hiu Darat", "img\\animal\\hiu_darat.jpg", "20", "Sirip Hiu")));
-            add(new ArrayList<>(Arrays.asList("Herbivora", "Kuda", "img\\animal\\horse.jpg", "14", "Daging Kuda")));
-            add(new ArrayList<>(Arrays.asList("Herbivora", "Domba", "img\\animal\\domba.jpg", "12", "Daging Domba")));
-            add(new ArrayList<>(Arrays.asList("Herbivora", "Sapi", "img\\animal\\sapi.jpg", "10", "Susu")));
-            add(new ArrayList<>(Arrays.asList("Omnivora", "Ayam", "img\\animal\\chicken.jpg", "5", "Telur")));
-            add(new ArrayList<>(Arrays.asList("Omnivora", "Beruang", "img\\animal\\bear.jpg", "25", "Daging Beruang")));
+            add(new ArrayList<>(Arrays.asList("Karnivora", "Hiu Darat", "20", "Sirip Hiu")));
+            add(new ArrayList<>(Arrays.asList("Herbivora", "Kuda", "14", "Daging Kuda")));
+            add(new ArrayList<>(Arrays.asList("Herbivora", "Domba", "12", "Daging Domba")));
+            add(new ArrayList<>(Arrays.asList("Herbivora", "Sapi", "10", "Susu")));
+            add(new ArrayList<>(Arrays.asList("Omnivora", "Ayam", "5", "Telur")));
+            add(new ArrayList<>(Arrays.asList("Omnivora", "Beruang", "25", "Daging Beruang")));
         }
     };
 
     public static ArrayList<ArrayList<String>> dataTanaman = new ArrayList<>() {
         {
             // nama, maksPanen, hasilPanen
-            add(new ArrayList<>(Arrays.asList("Biji Jagung", "img\\plant\\corn_kernel.jpg", "3", "Jagung")));
-            add(new ArrayList<>(Arrays.asList("Biji Labu", "img\\plant\\pumpkin_seed.png", "5", "Labu")));
-            add(new ArrayList<>(Arrays.asList("Biji Stroberi", "img\\plant\\strawberry_seed.jpg", "4", "Stroberi")));
+            add(new ArrayList<>(Arrays.asList("Biji Jagung", "3", "Jagung")));
+            add(new ArrayList<>(Arrays.asList("Biji Labu", "5", "Labu")));
+            add(new ArrayList<>(Arrays.asList("Biji Stroberi", "4", "Stroberi")));
         }
     };
 
     public static ArrayList<ArrayList<String>> dataProdukHewan = new ArrayList<>() {
         {
             // nama, harga, tambahanBerat
-            add(new ArrayList<>(Arrays.asList("Sirip Hiu", "img\\productanimal\\shark_fin.jpg", "500", "12")));
-            add(new ArrayList<>(Arrays.asList("Susu", "img\\productanimal\\milk.png", "100", "4")));
-            add(new ArrayList<>(Arrays.asList("Daging Domba", "img\\productanimal\\mutton.jpg", "120", "6")));
-            add(new ArrayList<>(Arrays.asList("Daging Kuda", "img\\productanimal\\horse_meat.png", "150", "8")));
-            add(new ArrayList<>(Arrays.asList("Telur", "img\\productanimal\\egg.jpg", "50", "2")));
-            add(new ArrayList<>(Arrays.asList("Daging Beruang", "img\\productanimal\\bear_meat.jpg", "500", "12")));
+            add(new ArrayList<>(Arrays.asList("Sirip Hiu", "500", "12")));
+            add(new ArrayList<>(Arrays.asList("Susu", "100", "4")));
+            add(new ArrayList<>(Arrays.asList("Daging Domba", "120", "6")));
+            add(new ArrayList<>(Arrays.asList("Daging Kuda", "150", "8")));
+            add(new ArrayList<>(Arrays.asList("Telur", "50", "2")));
+            add(new ArrayList<>(Arrays.asList("Daging Beruang", "500", "12")));
         }
     };
 
     public static ArrayList<ArrayList<String>> dataProdukTanaman = new ArrayList<>() {
         {
-            add(new ArrayList<>(Arrays.asList("Jagung", "img\\productplant\\corn.jpg", "150", "3")));
-            add(new ArrayList<>(Arrays.asList("Labu", "img\\productplant\\pumpkin.jpg", "500", "10")));
-            add(new ArrayList<>(Arrays.asList("Stroberi", "img\\productplant\\strawberry.png", "350", "5")));
+            add(new ArrayList<>(Arrays.asList("Jagung", "150", "3")));
+            add(new ArrayList<>(Arrays.asList("Labu", "500", "10")));
+            add(new ArrayList<>(Arrays.asList("Stroberi", "350", "5")));
         }
     };
 
-    public static ArrayList<ArrayList<String>> dataItem = new ArrayList<>() {
+    public static ArrayList<String> dataItem = new ArrayList<>() {
         {
-            add(new ArrayList<>(Arrays.asList("Accelerate", "img\\item\\accelerate.png")));
-            add(new ArrayList<>(Arrays.asList("Delay", "img\\item\\delay.jpg")));
-            add(new ArrayList<>(Arrays.asList("Instant Harvest", "img\\item\\harvest.JPG")));
-            add(new ArrayList<>(Arrays.asList("Destroy", "img\\item\\destroy.jpg")));
-            add(new ArrayList<>(Arrays.asList("Protect", "img\\item\\protect.jpg")));
-            add(new ArrayList<>(Arrays.asList("Trap", "img\\item\\trap.jpg")));
+            add("Accelerate");
+            add("Delay");
+            add("Instant Harvest");
+            add("Destroy");
+            add("Protect");
+            add("Trap");
         }
     };
-
-    public static Kartu makeKartuHewan(String jenisKartu, String nama, String imagePath, int maksPanen, String hasilPanen) {
+    
+    public static Kartu makeKartuHewan(String jenisKartu, String nama, int maksPanen, String hasilPanen) {
         switch (jenisKartu) {
             case "Karnivora":
-                return new Karnivora(nama, imagePath, maksPanen, hasilPanen);
+                return new Karnivora(nama, maksPanen, hasilPanen);
             case "Herbivora":
-                return new Herbivora(nama, imagePath, maksPanen, hasilPanen);
+                return new Herbivora(nama, maksPanen, hasilPanen);
             case "Omnivora":
-                return new Omnivora(nama, imagePath, maksPanen, hasilPanen);
+                return new Omnivora(nama, maksPanen, hasilPanen);
             default:
                 return null;
         }
     }
 
-    public static Kartu makeKartuTanaman(String nama, String imagePath, int maksPanen, String hasilPanen) {
-        return new Tanaman(nama, imagePath, maksPanen, hasilPanen);
+    public static Kartu makeKartuTanaman(String nama, int maksPanen, String hasilPanen) {
+        return new Tanaman(nama, maksPanen, hasilPanen);
     }
 
-    public static Kartu makeKartuProduk(String jenisKartu, String nama, String imagePath, int harga, int tambahanBerat) {
+    public static Kartu makeKartuProduk(String jenisKartu, String nama, int harga, int tambahanBerat) {
         switch (jenisKartu) {
             case "ProdukHewan":
-                return new ProdukHewan(nama, imagePath, harga, tambahanBerat);
+                return new ProdukHewan(nama, harga, tambahanBerat);
             case "ProdukTanaman":
-                return new ProdukTanaman(nama, imagePath, harga, tambahanBerat);
+                return new ProdukTanaman(nama, harga, tambahanBerat);
             default:
                 return null;
         }
     }
 
-    public static Kartu makeKartuItem(String nama, String imagePath) {
-        return new Item(nama, imagePath);
+    public static Kartu makeKartuItem(String nama) {
+        return new Item(nama);
     }
 
     public static Kartu getKartu(String nama) {
         // cari nama di semua data
         for (ArrayList<String> data : dataHewan) {
             if (data.get(1).equals(nama)) {
-                return makeKartuHewan(data.get(0), data.get(1), data.get(2), Integer.parseInt(data.get(3)), data.get(4));
+                return makeKartuHewan(data.get(0), data.get(1), Integer.parseInt(data.get(2)), data.get(3));
             }
         }
 
         for (ArrayList<String> data : dataTanaman) {
             if (data.get(0).equals(nama)) {
-                return makeKartuTanaman(data.get(0), data.get(1), Integer.parseInt(data.get(2)), data.get(3));
+                return makeKartuTanaman(data.get(0), Integer.parseInt(data.get(1)), data.get(2));
             }
         }
 
         for (ArrayList<String> data : dataProdukHewan) {
             if (data.get(0).equals(nama)) {
-                return makeKartuProduk("ProdukHewan", data.get(0), data.get(1), Integer.parseInt(data.get(2)),
-                        Integer.parseInt(data.get(3)));
+                return makeKartuProduk("ProdukHewan", data.get(0), Integer.parseInt(data.get(1)),
+                        Integer.parseInt(data.get(2)));
             }
         }
 
         for (ArrayList<String> data : dataProdukTanaman) {
             if (data.get(0).equals(nama)) {
-                return makeKartuProduk("ProdukTanaman", data.get(0), data.get(1), Integer.parseInt(data.get(2)),
-                        Integer.parseInt(data.get(3)));
+                return makeKartuProduk("ProdukTanaman", data.get(0), Integer.parseInt(data.get(1)),
+                        Integer.parseInt(data.get(2)));
             }
         }
 
-        for (ArrayList<String> data : dataItem) {
-            if (data.get(0).equals(nama)) {
-                return makeKartuItem(data.get(0), data.get(1));
+        for (String data : dataItem) {
+            if (data.equals(nama)) {
+                return makeKartuItem(data);
             }
         }
 
         return null;
+    }
+
+    public static Kartu getRandomHewan(){
+        ArrayList<String> data = FactoryKartu.dataHewan.get((int) (Math.random() * FactoryKartu.dataHewan.size()));
+        String jenisHewan = data.get(0);
+        String nama = data.get(1);
+        int maksPanen = Integer.parseInt(data.get(2));
+        String hasilPanen = data.get(3);
+        Kartu kartu = FactoryKartu.makeKartuHewan(jenisHewan, nama, maksPanen, hasilPanen);
+
+        return kartu;
+    }
+
+    public static Kartu getRandomTumbuhan(){
+        ArrayList<String> data = FactoryKartu.dataTanaman.get((int) (Math.random() * FactoryKartu.dataTanaman.size()));
+        String nama = data.get(0);
+        int maksPanen = Integer.parseInt(data.get(1));
+        String hasilPanen = data.get(2);
+        Kartu kartu = FactoryKartu.makeKartuTanaman(nama, maksPanen, hasilPanen);
+
+        return kartu;
+    }
+
+    public static Kartu getRandomProdukHewan(){
+        ArrayList<String> data = FactoryKartu.dataProdukHewan.get((int) (Math.random() * FactoryKartu.dataProdukHewan.size()));
+        String nama = data.get(0);
+        int harga = Integer.parseInt(data.get(1));
+        int tambahanBerat = Integer.parseInt(data.get(2));
+        Kartu kartu = FactoryKartu.makeKartuProduk("ProdukHewan", nama, harga, tambahanBerat);
+
+        return kartu;
+    }
+
+    public static Kartu getRandomProdukTumbuhan(){
+        ArrayList<String> data = FactoryKartu.dataProdukTanaman.get((int) (Math.random() * FactoryKartu.dataProdukTanaman.size()));
+        String nama = data.get(0);
+        int harga = Integer.parseInt(data.get(1));
+        int tambahanBerat = Integer.parseInt(data.get(2));
+        Kartu kartu = FactoryKartu.makeKartuProduk("ProdukTanaman", nama, harga, tambahanBerat);
+
+        return kartu;
+    }
+
+    public static Kartu getRandomItem(){
+        String data = FactoryKartu.dataItem.get((int) (Math.random() * FactoryKartu.dataItem.size()));
+        Kartu kartu = FactoryKartu.makeKartuItem(data);
+
+        return kartu;
     }
 }
