@@ -1,9 +1,6 @@
 package com.hbd.SimpanMuat;
 
-import com.hbd.Deck;
-
-import java.util.List;
-import java.util.Map;
+import com.hbd.Deck.Deck;
 
 public class PlayerState {
     private int duit;

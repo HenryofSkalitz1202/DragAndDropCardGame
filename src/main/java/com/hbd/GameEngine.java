@@ -1,13 +1,11 @@
 package com.hbd;
 
+import com.hbd.Deck.Exception.DeckPenuhException;
+import com.hbd.Pemain.Pemain;
 import com.hbd.SimpanMuat.GameState;
 import com.hbd.SimpanMuat.Notaris;
-import com.hbd.SimpanMuat.PlayerState;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GameEngine implements Notaris {
     private static GameEngine instance = null;
@@ -28,11 +26,19 @@ public class GameEngine implements Notaris {
         return instance;
     }
 
-    public void next(){
-        // Logic Next
-        // Tambah umur semua tanaman
+    public void start(){
+
+    }
+
+    public void next() throws DeckPenuhException {
+        pemain1.updateUmurPetak();
+        pemain2.updateUmurPetak();
         nomorTurn++;
-        // Shuffle Kartu Hingga Pemain Puas
+
+        if (nomorTurn % 2 == 1) {currentPemain = pemain1;}
+        else {currentPemain = pemain2;}
+        fasePengocokkan();
+        faseBebas();
         // Tentukan apakah akan terjadi serangan beruang
     }
 
@@ -50,7 +56,6 @@ public class GameEngine implements Notaris {
         return new GameState(nomorTurn, new HashMap<>());
     }
 
-//    @Override
 //    public PlayerState getPlayerState(int playerNumber) {
 //        if (playerNumber == 1){
 //            return new PlayerState(pemain1.getDuit(), pemain1.getDeck().size(), pemain1.getDeckAktif(), pemain1.getPetakLadang());
