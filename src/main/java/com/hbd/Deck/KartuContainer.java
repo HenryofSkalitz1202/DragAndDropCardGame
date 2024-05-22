@@ -44,12 +44,12 @@ public class KartuContainer implements Iterable<Kartu> {
 
     public Kartu peekTopKartu() throws DeckEmptyException{
         if (size() == 0) {throw new DeckEmptyException("Deck Kosong");}
-        return Container.getLast();
+        return Container.get(size() - 1);
     }
 
     public Kartu peekBottomKartu() throws DeckEmptyException{
         if (size() == 0) {throw new DeckEmptyException("Deck Kosong");}
-        return Container.getFirst();
+        return Container.get(0);
     }
 
     public Kartu takeKartuAt(int index) throws DeckEmptyException, DeckOutOfBoundsException{
@@ -61,12 +61,12 @@ public class KartuContainer implements Iterable<Kartu> {
 
     public Kartu takeTopKartu() throws DeckEmptyException{
         if (size() == 0) {throw new DeckEmptyException("Deck Kosong");}
-        return Container.removeLast();
+        return Container.remove(size() - 1);
     }
 
     public Kartu takeBottomKartu() throws DeckEmptyException{
         if (size() == 0) {throw new DeckEmptyException("Deck Kosong");}
-        return Container.removeFirst();
+        return Container.remove(0);
     }
 
     public List<Kartu> takeNTopKartu(int N) throws DeckOutOfBoundsException, DeckEmptyException{

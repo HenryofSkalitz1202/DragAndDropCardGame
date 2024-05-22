@@ -3,16 +3,16 @@ package com.hbd;
 import com.hbd.Kartu.Kartu;
 import javafx.scene.shape.Rectangle;
 
-public class PetakLadang {
+public class PetakLadangGUI {
     private Rectangle rect;
     private Kartu item;
 
-    public PetakLadang(Kartu item){
+    public PetakLadangGUI(Kartu item){
         this.rect = new Rectangle();
         this.item = item;
     }
 
-    public PetakLadang(double x, double y, double w, double h) {
+    public PetakLadangGUI(double x, double y, double w, double h) {
         this.rect = new Rectangle();
         this.rect.setTranslateX(x);
         this.rect.setTranslateY(y);
@@ -20,7 +20,7 @@ public class PetakLadang {
         this.rect.setHeight(h);
     }
 
-    public PetakLadang(double x, double y, double w, double h, Kartu item){
+    public PetakLadangGUI(double x, double y, double w, double h, Kartu item){
         this.rect = new Rectangle();
         this.rect.setTranslateX(x);
         this.rect.setTranslateY(y);
