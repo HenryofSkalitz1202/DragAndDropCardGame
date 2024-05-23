@@ -6,6 +6,6 @@ import javafx.scene.shape.Rectangle;
 public class Item extends Kartu {
 
     public Item(String nama){
-        super(nama, 1, 2, 3, 4, new Rectangle());
+        super(nama, new Rectangle());
     }
 }

@@ -4,18 +4,18 @@ import com.hbd.Kartu.Kartu;
 import javafx.scene.shape.Rectangle;
 
 public class PetakLadang {
-    private double x;
-    private double y;
-    private double h;
-    private double w;
-    private Rectangle rect;
+    private final double x;
+    private final double y;
+    private final double h;
+    private final double w;
+    private final Rectangle rect;
     private Kartu item;
 
-    public PetakLadang(double x, double y, double w, double h, Rectangle rect) {
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
+    public PetakLadang(Rectangle rect) {
+        this.x = rect.getLayoutX();
+        this.y = rect.getLayoutY();
+        this.w = rect.getWidth();
+        this.h = rect.getHeight();
         this.rect = rect;
     }
 

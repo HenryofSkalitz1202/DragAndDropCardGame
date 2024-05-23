@@ -10,7 +10,7 @@ public abstract class Makhluk extends Kartu {
     private final String hasilPanen;
 
     public Makhluk(String nama, int maksPanen, String hasilPanen) {
-        super(nama,1 , 2, 3, 4, new Rectangle());
+        super(nama, new Rectangle());
         this.progressPanen = 0;
         this.maksPanen = maksPanen;
         this.hasilPanen = hasilPanen;
