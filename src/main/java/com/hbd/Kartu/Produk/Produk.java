@@ -8,7 +8,7 @@ public class Produk extends Kartu {
     private final int tambahanBerat;
 
     public Produk(String nama, int harga, int tambahanBerat) {
-        super(nama, 1, 2, 3, 4, new Rectangle());
+        super(nama, new Rectangle());
         this.harga = harga;
         this.tambahanBerat = tambahanBerat;
     }

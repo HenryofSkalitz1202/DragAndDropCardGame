@@ -11,12 +11,12 @@ public class Kartu {
     private double w;
     private Rectangle rect;
 
-    public Kartu(String nama, double x, double y, double w, double h, Rectangle rect){
+    public Kartu(String nama, Rectangle rect){
         this.nama = nama;
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
+        this.x = rect.getLayoutX();
+        this.y = rect.getLayoutY();
+        this.w = rect.getWidth();
+        this.h = rect.getHeight();
         this.rect = rect;
     }
 
@@ -32,11 +32,9 @@ public class Kartu {
 
     public void setColor(Color color) {this.rect.setFill(color);}
 
-    public void draw() {
-        rect.setWidth(this.w);
-        rect.setHeight(this.h);
-        rect.setTranslateX(this.x);
-        rect.setTranslateY(this.y);
+    public void draw(double translateX, double translateY) {
+        rect.setLayoutX(translateX);
+        rect.setLayoutY(translateY);
     }
 
     public String getNama() {
