@@ -11,7 +11,7 @@ import com.hbd.PetakLadang.Exception.DiluarPetakException;
 public class PetakLadang implements Iterable<Makhluk> {
 
     private static final int lebar = 5;
-    private static final int tinggi = 5;
+    private static final int tinggi = 4;
     private final ArrayList<ArrayList<Makhluk>> ladang;
 
     /* Konstruktor PetakLadang
@@ -38,7 +38,7 @@ public class PetakLadang implements Iterable<Makhluk> {
         if (x >= lebar || x < 0 || y >= tinggi || y < 0){
             throw new DiluarPetakException("Ada usaha untuk akses petak di luar ladang");
         }
-        return this.ladang.get(x).get(y);
+        return this.ladang.get(y).get(x);
     }
 
     /*
@@ -52,7 +52,7 @@ public class PetakLadang implements Iterable<Makhluk> {
         if (x >= lebar || x < 0 || y >= tinggi || y < 0){
             throw new DiluarPetakException("Ada usaha untuk akses petak di luar ladang");
         }
-        this.ladang.get(x).set(y, makhluk);
+        this.ladang.get(y).set(x, makhluk);
     }
 
     public boolean hasAny(Method func) throws Exception{
@@ -76,7 +76,7 @@ public class PetakLadang implements Iterable<Makhluk> {
 
         @Override
         public boolean hasNext() {
-            return baris*kolom < lebar*tinggi;
+            return baris*lebar + kolom < lebar*tinggi;
         }
 
         @Override

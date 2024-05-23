@@ -70,7 +70,7 @@ public class Toko {
     public int jualItem(String namaItem) throws TokoHanyaMembeliProdukException {
         Kartu item = FactoryKartu.getKartu(namaItem);
 
-        if (item.getClass() != Produk.class){
+        if (!(item instanceof Produk)){
             throw new TokoHanyaMembeliProdukException("Toko tidak membeli barang bertipe " + item.getClass().getName());
         }
 

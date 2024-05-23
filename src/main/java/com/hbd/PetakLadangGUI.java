@@ -4,56 +4,32 @@ import com.hbd.Kartu.Kartu;
 import javafx.scene.shape.Rectangle;
 
 public class PetakLadangGUI {
-    private Rectangle rect;
+    private final double x;
+    private final double y;
+    private final double h;
+    private final double w;
+    private final Rectangle rect;
     private Kartu item;
 
-    public PetakLadangGUI(Kartu item){
-        this.rect = new Rectangle();
-        this.item = item;
+    public PetakLadangGUI(Rectangle rect) {
+        this.x = rect.getLayoutX();
+        this.y = rect.getLayoutY();
+        this.w = rect.getWidth();
+        this.h = rect.getHeight();
+        this.rect = rect;
     }
 
-    public PetakLadangGUI(double x, double y, double w, double h) {
-        this.rect = new Rectangle();
-        this.rect.setTranslateX(x);
-        this.rect.setTranslateY(y);
-        this.rect.setWidth(w);
-        this.rect.setHeight(h);
-    }
+    public double getX() {return this.x;}
 
-    public PetakLadangGUI(double x, double y, double w, double h, Kartu item){
-        this.rect = new Rectangle();
-        this.rect.setTranslateX(x);
-        this.rect.setTranslateY(y);
-        this.rect.setWidth(w);
-        this.rect.setHeight(h);
-        this.item = item;
-    }
+    public double getY() {return this.y;}
 
-    public double getX(){
-        return this.rect.getTranslateX();
-    }
+    public double getH() {return this.h;}
 
-    public double getY(){
-        return this.rect.getTranslateY();
-    }
+    public double getW() {return this.w;}
 
-    public double getH(){
-        return this.rect.getHeight();
-    }
+    public Kartu getItem() {return this.item;}
 
-    public double getW(){
-        return this.rect.getWidth();
-    }
+    public void setItem(Kartu k) {this.item = k;}
 
-    public void setItem(Kartu k){
-        this.item = k;
-    }
-
-    public Kartu getItem(){
-        return this.item;
-    }
-
-    public void removeItem(){
-        this.item = null;
-    }
+    public void removeItem() {this.item = null;}
 }
