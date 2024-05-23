@@ -3,15 +3,15 @@ package com.hbd;
 import com.hbd.Kartu.Kartu;
 import javafx.scene.shape.Rectangle;
 
-public class PetakDeck {
-    private double x;
-    private double y;
-    private double h;
-    private double w;
-    private Rectangle rect;
+public class PetakLadang {
+    private final double x;
+    private final double y;
+    private final double h;
+    private final double w;
+    private final Rectangle rect;
     private Kartu item;
 
-    public PetakDeck(Rectangle rect) {
+    public PetakLadang(Rectangle rect) {
         this.x = rect.getLayoutX();
         this.y = rect.getLayoutY();
         this.w = rect.getWidth();
@@ -27,9 +27,9 @@ public class PetakDeck {
 
     public double getW() {return this.w;}
 
-    public void setItem(Kartu k) {this.item = k;}
-
     public Kartu getItem() {return this.item;}
+
+    public void setItem(Kartu k) {this.item = k;}
 
     public void removeItem() {this.item = null;}
 }

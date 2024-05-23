@@ -5,6 +5,7 @@ import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Makhluk.Exception.BelumSiapPanenException;
 import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
 import com.hbd.Kartu.Produk.Produk;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public abstract class Makhluk extends Kartu {
     private final List<String> effect;
 
     public Makhluk(String nama, int maksPanen, String hasilPanen) {
-        super(nama);
+        super(nama, new Rectangle());
         this.progressPanen = 0;
         this.maksPanen = maksPanen;
         this.hasilPanen = hasilPanen;
