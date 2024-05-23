@@ -41,7 +41,7 @@ public class Tanaman extends Makhluk {
     }
 
     @Override
-    public ProdukTanaman panen() throws BelumSiapPanenException{
+    public ProdukTanaman panen() throws BelumSiapPanenException {
         if (!siapPanen()) {throw new BelumSiapPanenException("Tanaman ini belum siap panen");}
         return (ProdukTanaman) FactoryKartu.getKartu(this.getHasilPanen());
     }

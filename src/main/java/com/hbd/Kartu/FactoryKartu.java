@@ -1,5 +1,7 @@
 package com.hbd.Kartu;
 
+import com.hbd.Kartu.Exception.CardNotFoundException;
+import com.hbd.Kartu.Exception.JenisKartuTidakValidException;
 import com.hbd.Kartu.Makhluk.*;
 import com.hbd.Kartu.Produk.*;
 
@@ -7,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.hbd.Kartu.Item.*;
-
 public class FactoryKartu {
 
     public static ArrayList<ArrayList<String>> dataHewan = new ArrayList<>() {
@@ -62,7 +63,7 @@ public class FactoryKartu {
         }
     };
     
-    public static Kartu makeKartuHewan(String jenisKartu, String nama, int maksPanen, String hasilPanen) {
+    public static Kartu makeKartuHewan(String jenisKartu, String nama, int maksPanen, String hasilPanen) throws JenisKartuTidakValidException {
         switch (jenisKartu) {
             case "Karnivora":
                 return new Karnivora(nama, maksPanen, hasilPanen);
@@ -71,7 +72,7 @@ public class FactoryKartu {
             case "Omnivora":
                 return new Omnivora(nama, maksPanen, hasilPanen);
             default:
-                return null;
+                throw new JenisKartuTidakValidException("Jenis Kartu " + jenisKartu + " tidak valid");
         }
     }
 
@@ -94,7 +95,7 @@ public class FactoryKartu {
         return new Item(nama);
     }
 
-    public static Kartu getKartu(String nama) {
+    public static Kartu getKartu(String nama) throws CardNotFoundException, JenisKartuTidakValidException {
         // cari nama di semua data
         for (ArrayList<String> data : dataHewan) {
             if (data.get(1).equals(nama)) {
@@ -128,10 +129,10 @@ public class FactoryKartu {
             }
         }
 
-        return null;
+        throw new CardNotFoundException("Kartu dengan nama " + nama + " tidak ditemukan");
     }
 
-    public static Kartu getRandomHewan(){
+    public static Kartu getRandomHewan() throws JenisKartuTidakValidException {
         ArrayList<String> data = FactoryKartu.dataHewan.get((int) (Math.random() * FactoryKartu.dataHewan.size()));
         String jenisHewan = data.get(0);
         String nama = data.get(1);

@@ -7,7 +7,7 @@ import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.Kartu.Item.Item;
 import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Makhluk.Exception.BelumSiapPanenException;
-import com.hbd.Kartu.Makhluk.Exception.BerusahaMemberiItemKeMakhlukGaibException;
+import com.hbd.Pemain.Exception.BerusahaMemberiItemKeMakhlukGaibException;
 import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.Kartu.Makhluk.Tanaman;
@@ -97,7 +97,7 @@ public class Pemain {
         }
     }
 
-    public void BeliProdukKeToko(Toko toko, String namaProduk) throws TidakMampuBeliException, ProdukTidakDijualException, DeckPenuhException {
+    public void BeliProdukKeToko(Toko toko, String namaProduk) throws TidakMampuBeliException, ProdukTidakDijualException, DeckPenuhException{
 
         // Produk Tidak Dijual Exception dithrow dari sini
         Produk produk = toko.beliItem(namaProduk);

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Produk.Produk;
-import com.hbd.Pemain.Pemain;
 import com.hbd.Toko.Exception.ProdukTidakDijualException;
 import com.hbd.Toko.Exception.TokoHanyaMembeliProdukException;
 
@@ -54,7 +53,7 @@ public class Toko {
         return this.itemToko;
     }
 
-    public Produk beliItem(String namaItem) throws ProdukTidakDijualException{
+    public Produk beliItem(String namaItem) throws ProdukTidakDijualException {
         Produk item = (Produk) FactoryKartu.getKartu(namaItem);
         if (itemToko.containsKey(item)) {
             itemToko.put(item, itemToko.get(item) - 1);
@@ -68,7 +67,7 @@ public class Toko {
         return item;
     }
 
-    public int jualItem(String namaItem) throws TokoHanyaMembeliProdukException{
+    public int jualItem(String namaItem) throws TokoHanyaMembeliProdukException {
         Kartu item = FactoryKartu.getKartu(namaItem);
 
         if (item.getClass() != Produk.class){
