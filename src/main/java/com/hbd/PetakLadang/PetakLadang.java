@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
 
@@ -14,7 +13,8 @@ public class PetakLadang implements Iterable<Makhluk> {
     private static final int tinggi = 5;
     private final ArrayList<ArrayList<Makhluk>> ladang;
 
-    /* Konstruktor PetakLadang
+    /*
+     * Konstruktor PetakLadang
      * menginisialisasi petak ladang dengan berisi null
      */
     public PetakLadang() {
@@ -29,35 +29,46 @@ public class PetakLadang implements Iterable<Makhluk> {
     }
 
     /*
-     * getMahkluk (int x, int y) --> mengembalikan makhluk yang ada pada koordinat x, y
+     * getMahkluk (int x, int y) --> mengembalikan makhluk yang ada pada koordinat
+     * x, y
+     * 
      * @param
-     * x : koordinat horizontal dengan range [0..lebar - 1], 0 adalah kolom yang paling kiri
-     * y : koordinat vertikal dengan range [0..tinggi - 1], 0 adalah baris yang paling atas
+     * x : koordinat horizontal dengan range [0..lebar - 1], 0 adalah kolom yang
+     * paling kiri
+     * y : koordinat vertikal dengan range [0..tinggi - 1], 0 adalah baris yang
+     * paling atas
      */
     public Makhluk getMakhluk(int x, int y) throws DiluarPetakException {
-        if (x >= lebar || x < 0 || y >= tinggi || y < 0){
+        if (x >= lebar || x < 0 || y >= tinggi || y < 0) {
             throw new DiluarPetakException("Ada usaha untuk akses petak di luar ladang");
         }
         return this.ladang.get(x).get(y);
     }
 
     /*
-     * getMahkluk (int x, int y, Makhluk makhluk) --> mengeset makhluk pada koordinat x, y
+     * getMahkluk (int x, int y, Makhluk makhluk) --> mengeset makhluk pada
+     * koordinat x, y
+     * 
      * @param
-     * x  : koordinat horizontal dengan range [0..lebar - 1], 0 adalah kolom yang paling kiri
-     * y  : koordinat vertikal dengan range [0..tinggi - 1], 0 adalah baris yang paling atas
+     * x : koordinat horizontal dengan range [0..lebar - 1], 0 adalah kolom yang
+     * paling kiri
+     * y : koordinat vertikal dengan range [0..tinggi - 1], 0 adalah baris yang
+     * paling atas
      * makhluk : makhluk yang ingin mengisi petak x, y
      */
     public void setMakhluk(int x, int y, Makhluk makhluk) throws DiluarPetakException {
-        if (x >= lebar || x < 0 || y >= tinggi || y < 0){
+        if (x >= lebar || x < 0 || y >= tinggi || y < 0) {
             throw new DiluarPetakException("Ada usaha untuk akses petak di luar ladang");
         }
         this.ladang.get(x).set(y, makhluk);
     }
 
-    public boolean hasAny(Method func) throws Exception{
-        for(Makhluk makhluk : this){
-            if ((boolean) func.invoke(makhluk)){
+    public boolean hasAny(Method func) throws Exception {
+        for (Makhluk makhluk : this) {
+            if (makhluk == null) {
+                continue;
+            }
+            if ((boolean) func.invoke(makhluk)) {
                 return true;
             }
         }
@@ -70,13 +81,13 @@ public class PetakLadang implements Iterable<Makhluk> {
         return new PetakLadangIterator();
     }
 
-    class PetakLadangIterator implements Iterator<Makhluk>{
+    class PetakLadangIterator implements Iterator<Makhluk> {
         private int baris = 0;
         private int kolom = 0;
 
         @Override
         public boolean hasNext() {
-            return baris*kolom < lebar*tinggi;
+            return baris < tinggi && kolom < lebar;
         }
 
         @Override
@@ -85,13 +96,13 @@ public class PetakLadang implements Iterable<Makhluk> {
             int initialKolom = kolom;
 
             kolom++;
-            if (kolom >= lebar){
+            if (kolom >= lebar) {
                 baris++;
                 kolom -= lebar;
             }
             try {
                 return getMakhluk(initialBaris, initialKolom);
-            } catch (DiluarPetakException e){
+            } catch (DiluarPetakException e) {
                 return null;
             }
         }
