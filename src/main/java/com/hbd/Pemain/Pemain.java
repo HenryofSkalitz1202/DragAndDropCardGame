@@ -27,36 +27,43 @@ public class Pemain {
     private PetakLadang petakLadang;
     private int duit;
 
-    public Pemain(){
-        deck = new Deck();
-        deckAktif = new Deck();
+    public Pemain() {
+        deck = new Deck(40);
+        deckAktif = new Deck(6);
         petakLadang = new PetakLadang();
         duit = 0;
     }
 
-    public Deck getDeck(){
+    public Deck getDeck() {
         return deck;
     }
 
-    public Deck getDeckAktif(){
+    public Deck getDeckAktif() {
         return deckAktif;
     }
 
-    public PetakLadang getPetakLadang(){return petakLadang;}
+    public PetakLadang getPetakLadang() {
+        return petakLadang;
+    }
 
-    public int getDuit(){
+    public int getDuit() {
         return duit;
     }
 
-    public void setDuit(int newDuit){
+    public void setDuit(int newDuit) {
         duit = newDuit;
     }
 
-    public void tambahDuit(int extraDuit) {duit += extraDuit;}
+    public void tambahDuit(int extraDuit) {
+        duit += extraDuit;
+    }
 
-    public void pakaiDuit(int duitDipake) {duit -= duitDipake;}
+    public void pakaiDuit(int duitDipake) {
+        duit -= duitDipake;
+    }
 
-    public void beriItemKeLadang(Pemain aktor, Item item, int x, int y) throws DiluarPetakException, DeckPenuhException, IllegalItemException, ItemTidakAdaException, BerusahaMemberiItemKeMakhlukGaibException {
+    public void beriItemKeLadang(Pemain aktor, Item item, int x, int y) throws DiluarPetakException, DeckPenuhException,
+            IllegalItemException, ItemTidakAdaException, BerusahaMemberiItemKeMakhlukGaibException {
 
         // DiluarPetakException hanya mungkin di throw dari sini
         Makhluk korban = petakLadang.getMakhluk(x, y);
@@ -66,57 +73,66 @@ public class Pemain {
             throw new BerusahaMemberiItemKeMakhlukGaibException("Anda berusaha memberi item ke makluk gaib");
         }
 
-        if (aktor != this){
-            if (!(item.getNama().equals("Destroy") || item.getNama().equals("Delay"))){
+        if (aktor != this) {
+            if (!(item.getNama().equals("Destroy") || item.getNama().equals("Delay"))) {
                 throw new IllegalItemException("Anda tidak boleh menggunakan item itu pada ladang ini");
             }
         }
 
-        if (item.getNama().equals("Instant Harvest")){
-            if (deckAktif.remainingSlot() == 0) {throw new DeckPenuhException("Deck aktif penuh");}
+        if (item.getNama().equals("Instant Harvest")) {
+            if (deckAktif.remainingSlot() == 0) {
+                throw new DeckPenuhException("Deck aktif penuh");
+            }
 
             petakLadang.getMakhluk(x, y).setProgressPanen(petakLadang.getMakhluk(x, y).getMaksPanen());
             try {
                 panenPetak(x, y);
-            } catch (Exception e){/* Tidak mungkin terjadi */}
+            } catch (Exception e) {
+                /* Tidak mungkin terjadi */}
         } else if (item.getNama().equals("Destroy")) {
             petakLadang.setMakhluk(x, y, null);
-        } else{
+        } else {
             petakLadang.getMakhluk(x, y).hisabItem(item);
         }
     }
 
-    public void panenPetak(int x, int y) throws DiluarPetakException, BerusahaPanenMakhlukGaibException, BelumSiapPanenException, DeckPenuhException {
+    public void panenPetak(int x, int y) throws DiluarPetakException, BerusahaPanenMakhlukGaibException,
+            BelumSiapPanenException, DeckPenuhException {
         Makhluk korban = petakLadang.getMakhluk(x, y);
-        if (korban != null){
+        if (korban != null) {
             Produk hasilPanen = korban.panen();
             deckAktif.insertKartu(hasilPanen);
             petakLadang.setMakhluk(x, y, null);
-        } else{
+        } else {
             throw new BerusahaPanenMakhlukGaibException("Anda berusaha untuk memanen makhluk gaib");
         }
     }
 
-    public void BeliProdukKeToko(Toko toko, String namaProduk) throws TidakMampuBeliException, ProdukTidakDijualException, DeckPenuhException{
+    public void BeliProdukKeToko(Toko toko, String namaProduk)
+            throws TidakMampuBeliException, ProdukTidakDijualException, DeckPenuhException {
 
         // Produk Tidak Dijual Exception dithrow dari sini
         Produk produk = toko.beliItem(namaProduk);
-        try{
-            if (produk.getHarga() > duit){throw new TidakMampuBeliException("Uang anda tidak cukup untuk membeli itu");}
+        try {
+            if (produk.getHarga() > duit) {
+                throw new TidakMampuBeliException("Uang anda tidak cukup untuk membeli itu");
+            }
             pakaiDuit(produk.getHarga());
             deckAktif.insertKartu(produk);
-        } catch (TidakMampuBeliException e){
+        } catch (TidakMampuBeliException e) {
             toko.tambahItemKeToko(produk);
             throw e;
-        } catch (DeckPenuhException e){
+        } catch (DeckPenuhException e) {
             try {
                 tambahDuit(toko.jualItem(produk.getNama()));
-            } catch (TokoHanyaMembeliProdukException e2) {/* Tidak Mungkin Terjadi */}
+            } catch (TokoHanyaMembeliProdukException e2) {
+                /* Tidak Mungkin Terjadi */}
             throw e;
         }
     }
 
-    public void JualProdukKeToko(Toko toko, int indexDeckAktif) throws DeckEmptyException, DeckOutOfBoundsException, TokoHanyaMembeliProdukException {
+    public void JualProdukKeToko(Toko toko, int indexDeckAktif)
+            throws DeckEmptyException, DeckOutOfBoundsException, TokoHanyaMembeliProdukException {
 
         // Deck Empty dan DeckOutOfBound dithrow dari sini
         Kartu KartuDijual = deckAktif.takeKartuAt(indexDeckAktif);
@@ -124,20 +140,23 @@ public class Pemain {
         try {
             int uangDidapat = toko.jualItem(KartuDijual.getNama());
             tambahDuit(uangDidapat);
-        } catch (TokoHanyaMembeliProdukException e){
+        } catch (TokoHanyaMembeliProdukException e) {
             /*
              * Block ini tercapai jika berusaha menjual item yang bukan produk
              */
-            try{
+            try {
                 deckAktif.insertKartu(KartuDijual);
-            } catch (DeckPenuhException e2) {/* Tidak mungkin terjadi */}
+            } catch (DeckPenuhException e2) {
+                /* Tidak mungkin terjadi */}
             throw e;
         }
     }
 
-    public void updateUmurPetak(){
-        for(Makhluk tanaman : petakLadang){
-            if (tanaman.getClass() == Tanaman.class){
+    public void updateUmurPetak() {
+        for (Makhluk tanaman : petakLadang) {
+            if (tanaman == null)
+                continue;
+            if (tanaman.getClass() == Tanaman.class) {
                 ((Tanaman) tanaman).tambahUmurSatu();
             }
         }

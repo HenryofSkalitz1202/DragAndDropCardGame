@@ -20,4 +20,25 @@ public class Produk extends Kartu {
     public int getTambahanBerat() {
         return this.tambahanBerat;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        Produk produk = (Produk) obj;
+
+        if (harga != produk.harga)
+            return false;
+        return getNama() != null ? getNama().equals(produk.getNama()) : produk.getNama() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getNama() != null ? getNama().hashCode() : 0;
+        result = 31 * result + harga;
+        return result;
+    }
 }

@@ -7,29 +7,31 @@ import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Kartu;
 
-public class Deck extends KartuContainer{
+public class Deck extends KartuContainer {
 
     public Deck() {
         super();
     }
 
-    public Deck(List<Kartu> KartuKartu){
+    public Deck(List<Kartu> KartuKartu) {
         super(KartuKartu);
     }
 
-    public Deck(int n) {super(n);}
-
+    public Deck(int n) {
+        super(n);
+    }
 
     /**
      * addRandom : Menambahkan N kartu random ke dalam deck ini
+     * 
      * @param N
      * @throws DeckPenuhException
      *
-     * 35% Hewan
-     * 35% Tumbuhan
-     * 20% Item
-     * 5% ProdukHewan
-     * 5% ProdukTumbuhan
+     *                            35% Hewan
+     *                            35% Tumbuhan
+     *                            20% Item
+     *                            5% ProdukHewan
+     *                            5% ProdukTumbuhan
      */
     public void addRandom(int N) throws DeckPenuhException {
 
@@ -38,13 +40,14 @@ public class Deck extends KartuContainer{
             int kode = (int) (21.0 * Math.random());
 
             if (kode >= 0 && kode <= 7) {
-                ArrayList<String> data = FactoryKartu.dataHewan.get((int) (Math.random() * (FactoryKartu.dataHewan.size() - 1)));
-                
+                ArrayList<String> data = FactoryKartu.dataHewan
+                        .get((int) (Math.random() * (FactoryKartu.dataHewan.size() - 1)));
+
                 String jenisHewan = data.get(0);
                 String nama = data.get(1);
                 int maksPanen = Integer.parseInt(data.get(2));
                 String hasilPanen = data.get(3);
-                
+
                 Kartu kartu = FactoryKartu.makeKartuHewan(jenisHewan, nama, maksPanen, hasilPanen);
                 insertKartu(kartu);
             } else if (kode >= 7 && kode <= 14) {
@@ -61,7 +64,7 @@ public class Deck extends KartuContainer{
                 Kartu kartu = FactoryKartu.makeKartuItem(nama);
 
                 insertKartu(kartu);
-            } else if (kode == 19){
+            } else if (kode == 19) {
                 ArrayList<String> data = FactoryKartu.dataProdukHewan
                         .get((int) (Math.random() * FactoryKartu.dataProdukHewan.size()));
                 String nama = data.get(0);
@@ -85,9 +88,10 @@ public class Deck extends KartuContainer{
 
     /**
      * shuffle() -> melakukan shuffle deck
+     * 
      * @throws Exception
      */
-    public void shuffle() throws Exception{
+    public void shuffle() throws Exception {
         for (int i = 0; i < size(); i++) {
             insertKartu(takeKartuAt((int) (Math.random() * size())));
         }

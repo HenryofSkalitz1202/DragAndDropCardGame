@@ -6,6 +6,8 @@ import java.util.HashMap;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Produk.Produk;
+import com.hbd.Kartu.Produk.ProdukHewan;
+import com.hbd.Kartu.Produk.ProdukTanaman;
 import com.hbd.Toko.Exception.ProdukTidakDijualException;
 import com.hbd.Toko.Exception.TokoHanyaMembeliProdukException;
 
@@ -70,7 +72,9 @@ public class Toko {
     public int jualItem(String namaItem) throws TokoHanyaMembeliProdukException {
         Kartu item = FactoryKartu.getKartu(namaItem);
 
-        if (!(item instanceof Produk)){
+
+        if (!(item instanceof Produk)) {
+
             throw new TokoHanyaMembeliProdukException("Toko tidak membeli barang bertipe " + item.getClass().getName());
         }
 
