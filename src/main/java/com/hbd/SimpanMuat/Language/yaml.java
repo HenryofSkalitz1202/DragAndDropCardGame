@@ -3,9 +3,13 @@ package com.hbd.SimpanMuat.Language;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.yaml.snakeyaml.Yaml;
 
 public class yaml {
+
+    // buat save state
 
     public LinkedHashMap<String, Object> AddSingularElement(LinkedHashMap<String, Object> current, String key,
             String value) {
@@ -42,7 +46,15 @@ public class yaml {
         }
     }
 
-    // Yaml yaml = new Yaml();
-    // FileWriter writer = new FileWriter("output.yaml");
-    // yaml.dump(data, writer); // data bakal ke write ke output.yaml
+    // buat load state
+
+    public Map<String, Object> loadYaml(String path) {
+        Yaml yaml = new Yaml();
+        try {
+            return yaml.load(new java.io.FileReader(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

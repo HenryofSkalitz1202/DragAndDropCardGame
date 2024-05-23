@@ -5,8 +5,11 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class Json {
+
+    // buat save state
 
     public JSONObject AddSingularElement(JSONObject current, String key, String value) {
         current.put(key, value);
@@ -41,12 +44,20 @@ public class Json {
         }
     }
 
-    // try {
-    // FileWriter file = new FileWriter("output.json");
-    // file.write(jsonObject.toJSONString());
-    // file.close();
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
+    // buat load state
+
+    public JSONObject loadJson(String path) {
+        try {
+            return new JSONObject(new java.io.FileReader(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Map<String, Object> jsonToMap(String path) {
+        JSONObject jsonObject = loadJson(path);
+        return jsonObject.toMap();
+    }
 
 }
