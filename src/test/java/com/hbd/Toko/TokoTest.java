@@ -54,7 +54,6 @@ public class TokoTest {
 
     @Test
     public void testJualItemNotProduk() {
-
         assertThrows(TokoHanyaMembeliProdukException.class, () -> {
             toko.jualItem("Biji Jagung");
         });

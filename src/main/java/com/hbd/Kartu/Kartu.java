@@ -3,6 +3,8 @@ package com.hbd.Kartu;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Objects;
+
 public class Kartu {
     private final String nama;
     private double x;
@@ -39,5 +41,25 @@ public class Kartu {
 
     public String getNama() {
         return this.nama;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // self check
+        if (this == o)
+            return true;
+        // null check
+        if (o == null)
+            return false;
+        // type check and cast
+        if (getClass() != o.getClass())
+            return false;
+        Kartu otherKartu = (Kartu) o;
+        // field comparison
+        return Objects.equals(nama, otherKartu.nama);
+    }
+
+    public final int hashCode() {
+       return getNama().hashCode();
     }
 }

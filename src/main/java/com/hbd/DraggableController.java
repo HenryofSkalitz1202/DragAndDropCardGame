@@ -106,7 +106,7 @@ public class DraggableController implements Initializable {
 
     private ArrayList<Kartu> cards;
 
-    private ArrayList<PetakLadang> ladang;
+    private ArrayList<PetakLadangGUI> ladang;
 
     private ArrayList<PetakDeck> dek_aktif;
 
@@ -124,27 +124,27 @@ public class DraggableController implements Initializable {
         cards.add(k3);
         cards.add(k4);
 
-        ladang = new ArrayList<PetakLadang>();
-        PetakLadang l11 = new PetakLadang(petak_ladang_11);
-        PetakLadang l12 = new PetakLadang(petak_ladang_12);
-        PetakLadang l13 = new PetakLadang(petak_ladang_13);
-        PetakLadang l14 = new PetakLadang(petak_ladang_14);
-        PetakLadang l15 = new PetakLadang(petak_ladang_15);
-        PetakLadang l21 = new PetakLadang(petak_ladang_21);
-        PetakLadang l22 = new PetakLadang(petak_ladang_22);
-        PetakLadang l23 = new PetakLadang(petak_ladang_23);
-        PetakLadang l24 = new PetakLadang(petak_ladang_24);
-        PetakLadang l25 = new PetakLadang(petak_ladang_25);
-        PetakLadang l31 = new PetakLadang(petak_ladang_31);
-        PetakLadang l32 = new PetakLadang(petak_ladang_32);
-        PetakLadang l33 = new PetakLadang(petak_ladang_33);
-        PetakLadang l34 = new PetakLadang(petak_ladang_34);
-        PetakLadang l35 = new PetakLadang(petak_ladang_35);
-        PetakLadang l41 = new PetakLadang(petak_ladang_41);
-        PetakLadang l42 = new PetakLadang(petak_ladang_42);
-        PetakLadang l43 = new PetakLadang(petak_ladang_43);
-        PetakLadang l44 = new PetakLadang(petak_ladang_44);
-        PetakLadang l45 = new PetakLadang(petak_ladang_45);
+        ladang = new ArrayList<PetakLadangGUI>();
+        PetakLadangGUI l11 = new PetakLadangGUI(petak_ladang_11);
+        PetakLadangGUI l12 = new PetakLadangGUI(petak_ladang_12);
+        PetakLadangGUI l13 = new PetakLadangGUI(petak_ladang_13);
+        PetakLadangGUI l14 = new PetakLadangGUI(petak_ladang_14);
+        PetakLadangGUI l15 = new PetakLadangGUI(petak_ladang_15);
+        PetakLadangGUI l21 = new PetakLadangGUI(petak_ladang_21);
+        PetakLadangGUI l22 = new PetakLadangGUI(petak_ladang_22);
+        PetakLadangGUI l23 = new PetakLadangGUI(petak_ladang_23);
+        PetakLadangGUI l24 = new PetakLadangGUI(petak_ladang_24);
+        PetakLadangGUI l25 = new PetakLadangGUI(petak_ladang_25);
+        PetakLadangGUI l31 = new PetakLadangGUI(petak_ladang_31);
+        PetakLadangGUI l32 = new PetakLadangGUI(petak_ladang_32);
+        PetakLadangGUI l33 = new PetakLadangGUI(petak_ladang_33);
+        PetakLadangGUI l34 = new PetakLadangGUI(petak_ladang_34);
+        PetakLadangGUI l35 = new PetakLadangGUI(petak_ladang_35);
+        PetakLadangGUI l41 = new PetakLadangGUI(petak_ladang_41);
+        PetakLadangGUI l42 = new PetakLadangGUI(petak_ladang_42);
+        PetakLadangGUI l43 = new PetakLadangGUI(petak_ladang_43);
+        PetakLadangGUI l44 = new PetakLadangGUI(petak_ladang_44);
+        PetakLadangGUI l45 = new PetakLadangGUI(petak_ladang_45);
         ladang.add(l11); ladang.add(l12); ladang.add(l13); ladang.add(l14); ladang.add(l15);
         ladang.add(l21); ladang.add(l22); ladang.add(l23); ladang.add(l24); ladang.add(l25);
         ladang.add(l31); ladang.add(l32); ladang.add(l33); ladang.add(l34); ladang.add(l35);
@@ -175,7 +175,7 @@ public class DraggableController implements Initializable {
         k.setColor(Color.GREEN);
         initialX = event.getX();
         initialY = event.getY();
-        for (PetakLadang p: ladang) {
+        for (PetakLadangGUI p: ladang) {
             if (!Objects.isNull(p.getItem())) {
                 if (p.getItem().equals(k)) {
                     p.removeItem();
@@ -203,7 +203,7 @@ public class DraggableController implements Initializable {
         k.setColor(Color.GRAY);
         k.setX(k.getCard().getLayoutX());
         k.setY(k.getCard().getLayoutY());
-        for (PetakLadang p : ladang) {
+        for (PetakLadangGUI p : ladang) {
             if ((p.getX() < k.getX() && k.getX() < p.getX()+p.getW()) && (p.getY() < k.getY() && k.getY() < p.getY()+p.getH())) {
                 k.draw(p.getX(), p.getY());
                 p.setItem(k);
