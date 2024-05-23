@@ -11,6 +11,11 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hbd.MainController">
    <children>
+      <ImageView fitHeight="669.0" fitWidth="904.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/Frame%20Background.png" />
+         </image>
+      </ImageView>
       <BorderPane fx:id="home" prefHeight="667.0" prefWidth="889.0">
          <top>
             <HBox prefHeight="100.0" prefWidth="889.0" spacing="120.0" BorderPane.alignment="CENTER">
@@ -41,11 +46,7 @@
                               <Image url="@img/Turn.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@img/Next%20button.png" />
-                           </image>
-                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#ButtonNext" prefHeight="50.0" prefWidth="157.0" text="NEXT" />
                      </children>
                   </HBox>
                   <ImageView fitHeight="40.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true">
@@ -65,38 +66,21 @@
             </VBox>
          </left>
          <right>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="12.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="531.0" prefWidth="159.0" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleButton" prefHeight="52.0" prefWidth="149.0" text="Nama" />
-                  <ImageView fitHeight="52.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Ladang%20Lawan.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets right="20.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fitHeight="53.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Toko.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="52.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Save%20State.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="55.0" fitWidth="151.0">
-                     <image>
-                        <Image url="@img/Load%20Plugin.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="53.0" fitWidth="150.0">
-                     <image>
-                        <Image url="@img/Load%20State.png" />
-                     </image>
-                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#ButtonLadangku" prefHeight="50.0" prefWidth="157.0" text="LADANGKU" />
+                  <Button mnemonicParsing="false" onAction="#ButtonLadangLawan" prefHeight="50.0" prefWidth="157.0" text="LADANG LAWAN" />
+                  <Button mnemonicParsing="false" onAction="#ButtonToko" prefHeight="50.0" prefWidth="157.0" text="TOKO" />
+                  <Button mnemonicParsing="false" onAction="#ButtonSaveState" prefHeight="50.0" prefWidth="157.0" text="SAVE STATE" />
+                  <Button mnemonicParsing="false" onAction="#ButtonLoadPlugin" prefHeight="50.0" prefWidth="157.0" text="LOAD PLUGIN" />
+                  <Button mnemonicParsing="false" onAction="#ButtonLoadState" prefHeight="50.0" prefWidth="157.0" text="LOAD STATE" />
                </children>
+               <opaqueInsets>
+                  <Insets right="20.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
             </VBox>
          </right>
          <bottom>
@@ -121,6 +105,9 @@
                </padding>
             </HBox>
          </bottom>
+         <opaqueInsets>
+            <Insets right="20.0" />
+         </opaqueInsets>
       </BorderPane>
    </children>
 </AnchorPane>
