@@ -21,6 +21,18 @@ public class Deck extends KartuContainer {
         super(n);
     }
 
+    /**
+     * addRandom : Menambahkan N kartu random ke dalam deck ini
+     * 
+     * @param N
+     * @throws DeckPenuhException
+     *
+     *                            35% Hewan
+     *                            35% Tumbuhan
+     *                            20% Item
+     *                            5% ProdukHewan
+     *                            5% ProdukTumbuhan
+     */
     public void addRandom(int N) throws DeckPenuhException {
 
         for (int i = 0; i < N; i++) {
@@ -29,7 +41,7 @@ public class Deck extends KartuContainer {
 
             if (kode >= 0 && kode <= 7) {
                 ArrayList<String> data = FactoryKartu.dataHewan
-                        .get((int) (Math.random() * FactoryKartu.dataHewan.size()));
+                        .get((int) (Math.random() * (FactoryKartu.dataHewan.size() - 1)));
 
                 String jenisHewan = data.get(0);
                 String nama = data.get(1);
@@ -74,6 +86,11 @@ public class Deck extends KartuContainer {
         }
     }
 
+    /**
+     * shuffle() -> melakukan shuffle deck
+     * 
+     * @throws Exception
+     */
     public void shuffle() throws Exception {
         for (int i = 0; i < size(); i++) {
             insertKartu(takeKartuAt((int) (Math.random() * size())));
