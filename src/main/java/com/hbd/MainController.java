@@ -2,8 +2,15 @@ package com.hbd;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class MainController {
 
@@ -60,6 +67,8 @@ public class MainController {
     @FXML
     private void ButtonLoadState(ActionEvent event){
         System.out.println("Test6");
+        Popup popup = new Popup();
+        popup.display();
 
     }
 

@@ -1,10 +1,13 @@
 package com.hbd;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 
 public class FxmlLoader {
     private Pane view;
+    private AnchorPane scene;
 
     public Pane getPage(String fileName){
 
@@ -15,7 +18,7 @@ public class FxmlLoader {
 
             }
 
-            view = new FXMLLoader().load(fileURL);
+            view = FXMLLoader.load(fileURL);
 
 
         } catch (Exception e){
@@ -24,5 +27,7 @@ public class FxmlLoader {
     
         return view;
     }
+
+
 
 }

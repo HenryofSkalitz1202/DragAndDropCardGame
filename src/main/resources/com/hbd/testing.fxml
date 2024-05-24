@@ -5,9 +5,9 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="492.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="492.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="197.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Berhasil" wrappingWidth="295.13671875">
+      <Text layoutX="92.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Berhasil" wrappingWidth="307.13671875">
          <font>
             <Font size="88.0" />
          </font>
