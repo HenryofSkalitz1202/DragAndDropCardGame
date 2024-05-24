@@ -28,7 +28,7 @@ public class Pemain {
     private int duit;
 
     public Pemain() {
-        deck = new Deck(40);
+        deck = new Deck();
         deckAktif = new Deck(6);
         petakLadang = new PetakLadang();
         duit = 0;
@@ -48,6 +48,21 @@ public class Pemain {
 
     public int getDuit() {
         return duit;
+    }
+
+    public void setDeckSize(int n){
+        deck = new Deck();
+        try {
+            deck.addRandom(n);
+        } catch (DeckPenuhException e) {/* Actually Impossible */}
+    }
+
+    public void setDeckAktif(Deck _deckAktif){
+        deckAktif = _deckAktif;
+    }
+
+    public void setPetakLadang(PetakLadang _petakLadang) {
+        petakLadang = _petakLadang;
     }
 
     public void setDuit(int newDuit) {

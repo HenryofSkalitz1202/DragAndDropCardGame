@@ -97,34 +97,35 @@ public class FactoryKartu {
 
     public static Kartu getKartu(String nama) throws CardNotFoundException, JenisKartuTidakValidException {
         // cari nama di semua data
+        nama = nama.replace('_', ' ');
         for (ArrayList<String> data : dataHewan) {
-            if (data.get(1).equals(nama)) {
+            if (data.get(1).equalsIgnoreCase(nama)) {
                 return makeKartuHewan(data.get(0), data.get(1), Integer.parseInt(data.get(2)), data.get(3));
             }
         }
 
         for (ArrayList<String> data : dataTanaman) {
-            if (data.get(0).equals(nama)) {
+            if (data.get(0).equalsIgnoreCase(nama)) {
                 return makeKartuTanaman(data.get(0), Integer.parseInt(data.get(1)), data.get(2));
             }
         }
 
         for (ArrayList<String> data : dataProdukHewan) {
-            if (data.get(0).equals(nama)) {
+            if (data.get(0).equalsIgnoreCase(nama)) {
                 return makeKartuProduk("ProdukHewan", data.get(0), Integer.parseInt(data.get(1)),
                         Integer.parseInt(data.get(2)));
             }
         }
 
         for (ArrayList<String> data : dataProdukTanaman) {
-            if (data.get(0).equals(nama)) {
+            if (data.get(0).equalsIgnoreCase(nama)) {
                 return makeKartuProduk("ProdukTanaman", data.get(0), Integer.parseInt(data.get(1)),
                         Integer.parseInt(data.get(2)));
             }
         }
 
         for (String data : dataItem) {
-            if (data.equals(nama)) {
+            if (data.equalsIgnoreCase(nama)) {
                 return makeKartuItem(data);
             }
         }

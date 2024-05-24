@@ -34,11 +34,4 @@ public class Produk extends Kartu {
             return false;
         return getNama() != null ? getNama().equals(produk.getNama()) : produk.getNama() == null;
     }
-
-    @Override
-    public int hashCode() {
-        int result = getNama() != null ? getNama().hashCode() : 0;
-        result = 31 * result + harga;
-        return result;
-    }
 }

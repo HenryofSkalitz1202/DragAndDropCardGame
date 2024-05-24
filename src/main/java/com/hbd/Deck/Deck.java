@@ -27,11 +27,11 @@ public class Deck extends KartuContainer {
      * @param N
      * @throws DeckPenuhException
      *
-     *                            35% Hewan
-     *                            35% Tumbuhan
-     *                            20% Item
-     *                            5% ProdukHewan
-     *                            5% ProdukTumbuhan
+     * 35% Hewan
+     * 35% Tumbuhan
+     * 20% Item
+     * 5% ProdukHewan
+     * 5% ProdukTumbuhan
      */
     public void addRandom(int N) throws DeckPenuhException {
 

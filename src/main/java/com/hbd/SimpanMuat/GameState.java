@@ -14,12 +14,7 @@ public class GameState {
     public int getCurrentTurn() {
         return currentTurn;
     }
-
     public Map<String, Integer> getShopItems() {
         return shopItems;
-    }
-
-    public int getShopItemsCount(){
-        return shopItems.size();
     }
 }

@@ -28,6 +28,14 @@ public class PetakLadang implements Iterable<Makhluk> {
         }
     }
 
+    public int getLebar() {
+        return lebar;
+    }
+
+    public int getTinggi(){
+        return tinggi;
+    }
+
     /*
      * getMahkluk (int x, int y) --> mengembalikan makhluk yang ada pada koordinat
      * x, y
@@ -88,7 +96,6 @@ public class PetakLadang implements Iterable<Makhluk> {
         @Override
         public boolean hasNext() {
             return baris < tinggi && kolom < lebar;
-
         }
 
         @Override

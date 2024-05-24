@@ -14,7 +14,7 @@ public abstract class Makhluk extends Kartu {
     private int progressPanen;
     private final int maksPanen;
     private final String hasilPanen;
-    private final List<String> effect;
+    private List<String> effect;
 
     public Makhluk(String nama, int maksPanen, String hasilPanen) {
         super(nama, new Rectangle());
@@ -39,6 +39,8 @@ public abstract class Makhluk extends Kartu {
     public List<String> getEffect(){
         return effect;
     }
+
+    public void setEffect(List<String> _effect) {effect = new ArrayList<>(_effect);}
 
     public void setProgressPanen(int progressPanen) {
         this.progressPanen = progressPanen;
