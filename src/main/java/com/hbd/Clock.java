@@ -1,7 +1,5 @@
 package com.hbd;
 
-import java.text.BreakIterator;
-
 public class Clock implements Runnable {
     private int countdownSeconds;
 
