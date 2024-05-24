@@ -1,10 +1,12 @@
 package com.hbd;
 
+import com.hbd.Deck.Deck;
 import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Produk.Produk;
 import com.hbd.Pemain.Pemain;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
+import com.hbd.PetakLadang.PetakLadang;
 import com.hbd.SimpanMuat.GameState;
 import com.hbd.SimpanMuat.Librarian;
 import com.hbd.SimpanMuat.Notaris;
@@ -13,6 +15,7 @@ import com.hbd.Toko.Toko;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -70,6 +73,14 @@ public class GameEngine{
         } else {
             instance.currentPemain = instance.pemain2;
         }
+    }
+
+    public Pemain getCurrentPemain(){
+        return currentPemain;
+    }
+
+    public void initializeDefault(){
+        loadInstance(new GameState(1, new HashMap<>()), new PlayerState(0, 40, new Deck(), new PetakLadang()), new PlayerState(0, 40, new Deck(), new PetakLadang()));
     }
 
     public void start(){
