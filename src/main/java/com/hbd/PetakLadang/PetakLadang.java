@@ -71,6 +71,13 @@ public class PetakLadang implements Iterable<Makhluk> {
         this.ladang.get(y).set(x, makhluk);
     }
 
+    public void setNull(int x, int y) throws DiluarPetakException {
+        if (x >= lebar || x < 0 || y >= tinggi || y < 0){
+            throw new DiluarPetakException("Ada usaha untuk akses petak di luar ladang");
+        }
+        this.ladang.get(y).set(x, null);
+    }
+
     public boolean hasAny(Method func) throws Exception {
         for (Makhluk makhluk : this) {
             if (makhluk == null) {
@@ -81,6 +88,25 @@ public class PetakLadang implements Iterable<Makhluk> {
             }
         }
         return false;
+    }
+
+    public void printLadang() {
+        System.out.println("Petak Ladang:");
+        for (int i = 0; i < tinggi; i++) {
+            for (int j = 0; j < lebar; j++) {
+                try {
+                    Makhluk makhluk = getMakhluk(j, i);
+                    if (makhluk != null) {
+                        System.out.print(makhluk.getNama() + "\t");
+                    } else {
+                        System.out.print("null\t");
+                    }
+                } catch (DiluarPetakException e) {
+                    System.out.print("null\t");
+                }
+            }
+            System.out.println();
+        }
     }
 
     /* Diimplementasikan Iterator untuk PetakLadang */

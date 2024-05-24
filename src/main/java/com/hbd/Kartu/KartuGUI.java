@@ -4,12 +4,12 @@ import java.util.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-class KartuGUI{
+public class KartuGUI{
     private Kartu kartu;
     private Rectangle rect;
     private static final HashMap<String, String> imagePaths = new HashMap<String, String>();
 
-    private static void initializePaths(){
+    public static void initializePaths(){
         imagePaths.put("Hiu Darat", "img\\animal\\hiu_darat.jpg");
         imagePaths.put("Kuda", "img\\animal\\horse.jpg");
         imagePaths.put("Domba", "img\\animal\\domba.jpg");
