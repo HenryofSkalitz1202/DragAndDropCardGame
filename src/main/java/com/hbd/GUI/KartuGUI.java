@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import java.io.File;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,7 +23,7 @@ public class KartuGUI {
             { "Domba", "/img/animal/domba.jpg" },
             { "Hiu Darat", "/img/animal/hiu_darat.jpg" },
             { "Kuda", "/img/animal/horse.jpg" },
-            { "Cow", "/img/animal/cow.jpg" },
+            { "Sapi", "/img/animal/sapi.jpg" },
             { "Accelerate", "/img/item/accelerate.png" },
             { "Delay", "/img/item/delay.jpg" },
             { "Destroy", "/img/item/destroy.jpg" },
@@ -45,14 +44,15 @@ public class KartuGUI {
             { "Stroberi", "/img/productplant/strawberry.png" }
     }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
 
-    public KartuGUI(Kartu kartu, Rectangle rect){
+    public KartuGUI(Kartu kartu, double x, double y){
         this.kartu = kartu;
-        this.x = rect.getLayoutX();
-        this.y = rect.getLayoutY();
+        this.x = x;
+        this.y = y;
+        this.rect = new Rectangle(80, 80);
         this.w = rect.getWidth();
         this.h = rect.getHeight();
-        this.rect = rect;
         setImg();
+        draw();
     }
 
     public void setImg(){
@@ -68,15 +68,24 @@ public class KartuGUI {
 
     public double getY() {return this.y;}
 
-    public Rectangle getCard() {return this.rect;}
+    public double getWidth() {return w;}
+    public double getHeight() {return h;}
+
+    public Rectangle getRect() {return this.rect;}
 
     public Kartu getKartu() {return kartu;}
 
     public void setColor(Color color) {this.rect.setFill(color);}
 
-    public void draw(double translateX, double translateY) {
-        rect.setLayoutX(translateX);
-        rect.setLayoutY(translateY);
+    public void draw() {
+        rect.setTranslateX(x);
+        rect.setTranslateY(y);
+    }
+
+    public void translate(double translateX, double translateY){
+        x += translateX;
+        y += translateY;
+        draw();
     }
 
     public String getNama() {

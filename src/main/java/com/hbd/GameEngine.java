@@ -87,7 +87,7 @@ public class GameEngine{
 
     }
 
-    public void next() throws DeckPenuhException {
+    public void next() {
         pemain1.updateUmurPetak();
         pemain2.updateUmurPetak();
         nomorTurn++;
@@ -107,16 +107,13 @@ public class GameEngine{
         // Bebas ngapain aja
     }
 
-    public static void main(String[] args) throws DiluarPetakException, IOException, DeckPenuhException {
-        GameEngine ge = GameEngine.getInstance();
-        librarian.load(librarian.getLanguageAtIndex(2), "cobayaml2");
+    public void loadFile(String path) throws Exception{
+        librarian.load(librarian.getLanguageAtIndex(0), path);
+    }
 
-        ge = GameEngine.getInstance();
-        librarian.save(ge.notaris.getGameState(ge.nomorTurn, Toko.getInstance()),
-                ge.notaris.getPlayerState(ge.pemain1),
-                ge.notaris.getPlayerState(ge.pemain2),
-                librarian.getLanguageAtIndex(2),
-                "cobayaml3"
-        );
+    public static void main(String[] args) throws DiluarPetakException, IOException, DeckPenuhException {
+        librarian.load(librarian.getLanguageAtIndex(0), "default");
+
+        librarian.study("C:/Users/HP/Documents/Tugas_Coolyeah/semester_4/OOP/pluginCode/yamlPlugin/target/hbd_yamlPlugin-1.0-jar-with-dependencies.jar");
     }
 }

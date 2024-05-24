@@ -8,10 +8,8 @@ import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.Kartu.Produk.Produk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
 import com.hbd.PetakLadang.PetakLadangCodeAdapter;
-import com.hbd.SimpanMuat.Language.Json;
 import com.hbd.SimpanMuat.Language.Language;
 import com.hbd.SimpanMuat.Language.Txt;
-import com.hbd.SimpanMuat.Language.Yaml;
 
 import java.io.*;
 import java.util.*;
@@ -19,12 +17,12 @@ import java.util.*;
 public class Librarian {
 
     private List<Language> Languages;
+    private Scholar otherPersonality;
 
     public Librarian(){
         Languages = new ArrayList<>();
+        otherPersonality = new Scholar();
         Languages.add(new Txt());
-        Languages.add(new Json());
-        Languages.add(new Yaml());
     }
 
     public void save(GameState gameState, PlayerState player1State, PlayerState player2State, Language lang, String FolderName) throws IOException{
@@ -90,6 +88,24 @@ public class Librarian {
 
     public Language getLanguageAtIndex(int idx){
         return Languages.get(idx);
+    }
+    public List<String> getLanguagesOptions() {
+        List<String> result = new ArrayList<>();
+        for (Language language : Languages){
+            result.add(language.getExtension());
+        }
+        return result;
+    }
+
+    public void study(String JarPath) throws IOException{
+        List<Object> ClassGotten = otherPersonality.loadClasses(JarPath);
+
+        for (Object o : ClassGotten){
+            try {
+                Language lang = (Language) o;
+                Languages.add(lang);
+            } catch (Exception e) {/* Skip Aja Lah Kalo Merusak */}
+        }
     }
 
     private GameState loadGameState(Language lang, String folderPath) throws FileNotFoundException{

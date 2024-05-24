@@ -1,10 +1,13 @@
 package com.hbd.GUI;
 
 
+import com.hbd.Deck.Deck;
+import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.GameEngine;
 import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
+import com.hbd.PetakLadang.PetakLadang;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
@@ -73,17 +76,53 @@ public class MainController {
         System.out.println("Test7");
     }
 
-//    public static boolean LetGoHandler(Makhluk makhluk, int row, int column, boolean fromLadang, boolean fromDeck) throws DiluarPetakException {
-//        if (GameEngine.getInstance().getCurrentPemain().getPetakLadang().getMakhluk(x, y) != null){
-//            return false;
-//        }
-//        else {
-//            GameEngine.getInstance().getCurrentPemain().getPetakLadang().setMakhluk(x, y, makhluk);
-//            return true;
-//        }
-//    }
+    public void LetGoHandler(Makhluk makhluk, int row, int column, int initialRow, int initialColumn, boolean fromLadang, boolean toLadang) throws DiluarPetakException {
+        if (toLadang) {
+            if (fromLadang) {
+                if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
+                    return;
+                } else {
+                    getCurrentPetakLadang().setMakhluk(column, row, makhluk);
+                    getCurrentPetakLadang().setMakhluk(initialColumn, initialRow, null);
+                }
+            } else {
+                if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
+                    return;
+                } else {
+                    getCurrentPetakLadang().setMakhluk(column, row, makhluk);
+                    try {
+                        getCurrentDeckAktif().takeKartuAt(initialColumn);
+                    } catch (Exception e) {;}
+                }
+            }
+        } else {
+            if (fromLadang) {
+                if (getCurrentDeckAktif().remainingSlot() == 0) {
+                    return;
+                } else {
+                    getCurrentPetakLadang().setMakhluk(initialColumn, initialRow, null);
+                    try{
+                        getCurrentDeckAktif().insertKartu(makhluk);
+                    } catch (DeckPenuhException e) {/* Tidak Mungkin */}
+                }
+            } else{
+                try {
+                    getCurrentDeckAktif().takeKartuAt(initialColumn);
+                    getCurrentDeckAktif().insertKartu(makhluk);
+                } catch (Exception e) {/* Tidak akan terjadi */}
+            }
+        }
+    }
 
-    public static void initializeGame(){
+    public void initializeGame(){
         GameEngine.getInstance().initializeDefault();
+    }
+
+    public PetakLadang getCurrentPetakLadang(){
+        return GameEngine.getInstance().getCurrentPemain().getPetakLadang();
+    }
+
+    public Deck getCurrentDeckAktif(){
+        return GameEngine.getInstance().getCurrentPemain().getDeckAktif();
     }
 }
