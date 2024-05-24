@@ -1,6 +1,7 @@
 package com.hbd;
 
 import javafx.scene.*;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.event.ActionEvent;
@@ -11,7 +12,13 @@ import javafx.fxml.FXML;
 
 public class Popup {
     private static Stage popupwindow;
+
+    @FXML
+    private TextField format;
     
+    @FXML
+    private TextField folder;
+
     public void display()
     {
 
@@ -23,7 +30,7 @@ public class Popup {
         FxmlLoader object = new FxmlLoader();
         Pane view = object.getPage("loadstate");
         
-        Scene scene = new Scene(view, 400, 400);
+        Scene scene = new Scene(view, 600, 400);
         
 
         popupwindow.setScene(scene); 
@@ -39,6 +46,14 @@ public class Popup {
         System.out.println("HandlePopUp");
         popupwindow.close();
     }    
+
+    @FXML
+    public void SubmitLoadState(ActionEvent event){
+        System.out.println("SubmitLoadState");
+        System.out.println("Formatnya " + format.getText());
+        System.out.println("Foldernya " + folder.getText());
+        popupwindow.close();
+    }
 }
     
 
