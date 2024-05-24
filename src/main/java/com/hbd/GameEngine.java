@@ -2,6 +2,9 @@ package com.hbd;
 
 import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.Kartu.FactoryKartu;
+import com.hbd.Kartu.Item.Item;
+import com.hbd.Kartu.Makhluk.Makhluk;
+import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
 import com.hbd.Kartu.Produk.Produk;
 import com.hbd.Pemain.Pemain;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
@@ -23,7 +26,7 @@ public class GameEngine{
     private Pemain pemain1 = null;
     private Pemain pemain2 = null;
     private int nomorTurn = 1;
-    private Pemain currentPemain = null;
+    private static Pemain currentPemain = null;
     private final Notaris notaris = new Notaris();
 
     private GameEngine(){
@@ -72,7 +75,7 @@ public class GameEngine{
         }
     }
 
-    public void start(){
+    public static void start(){
 
     }
 
@@ -96,16 +99,47 @@ public class GameEngine{
         // Bebas ngapain aja
     }
 
-    public static void main(String[] args) throws DiluarPetakException, IOException, DeckPenuhException {
+    public static void faseBearAttack() throws Exception {
+        BearAttack.startBearAttack(currentPemain.getPetakLadang(), currentPemain.getDeckAktif());
+    }
+
+    public static void main(String[] args) throws DiluarPetakException, IOException, DeckPenuhException, ItemTidakAdaException, Exception {
+        start();
         GameEngine ge = GameEngine.getInstance();
-        librarian.load(librarian.getLanguageAtIndex(2), "cobayaml2");
+
+        currentPemain = new Pemain();
+        Item protectItem = (Item) FactoryKartu.getKartu("Protect");
+        Item trapItem = (Item) FactoryKartu.getKartu("Trap");
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                Makhluk hewanLadang;
+                if (i <= 2 && j <= 3) {
+                    hewanLadang = (Makhluk) FactoryKartu.getKartu("Sapi");
+                    currentPemain.getPetakLadang().setMakhluk(j, i, hewanLadang);
+                } else if (i == 3) {
+                    hewanLadang = (Makhluk) FactoryKartu.getKartu("Ayam");
+                    hewanLadang.hisabItem(protectItem);
+                    currentPemain.getPetakLadang().setMakhluk(j, i, hewanLadang);
+                } else {
+                    hewanLadang = (Makhluk) FactoryKartu.getKartu("Kuda");
+                    hewanLadang.hisabItem(trapItem);
+                    currentPemain.getPetakLadang().setMakhluk(j, i, hewanLadang);
+                }
+            }
+        }
 
         ge = GameEngine.getInstance();
-        librarian.save(ge.notaris.getGameState(ge.nomorTurn, Toko.getInstance()),
-                ge.notaris.getPlayerState(ge.pemain1),
-                ge.notaris.getPlayerState(ge.pemain2),
-                librarian.getLanguageAtIndex(2),
-                "cobayaml3"
-        );
+        faseBearAttack();
+        // GameEngine ge = GameEngine.getInstance();
+        // librarian.load(librarian.getLanguageAtIndex(2), "cobayaml2");
+
+        // ge = GameEngine.getInstance();
+        // librarian.save(ge.notaris.getGameState(ge.nomorTurn, Toko.getInstance()),
+        //         ge.notaris.getPlayerState(ge.pemain1),
+        //         ge.notaris.getPlayerState(ge.pemain2),
+        //         librarian.getLanguageAtIndex(2),
+        //         "cobayaml3"
+        // );
     }
 }
