@@ -81,6 +81,14 @@ public class KartuContainer implements Iterable<Kartu> {
         
         return result;
     }
+
+    public boolean isEmpty(){
+        return size() == 0;
+    }
+
+    public boolean isFull(){
+        return size() == capacity;
+    }
     
     public void insertKartu(Kartu kartu) throws DeckPenuhException {
         if (size() == capacity) {throw new DeckPenuhException("Deck sudah penuh");}
@@ -121,4 +129,20 @@ public class KartuContainer implements Iterable<Kartu> {
             } catch (Exception e) {return null;}
         }
     }
+
+    public void print() {
+        System.out.println("KartuContainer:");
+        for (int i = 0; i < Container.size(); i++) {
+            if (Container.get(i) == null) {
+                System.out.print("null\t");
+            } else {
+                System.out.print(Container.get(i).getNama() + "\t");
+            }
+        }
+        // If there are fewer than 6 cards, print additional nulls to ensure 6 slots are shown
+        for (int i = Container.size(); i < 6; i++) {
+            System.out.print("null\t");
+        }
+        System.out.println();
+    }    
 }

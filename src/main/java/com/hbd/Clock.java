@@ -1,5 +1,7 @@
 package com.hbd;
 
+import java.text.BreakIterator;
+
 public class Clock implements Runnable {
     private int countdownSeconds;
 
@@ -18,10 +20,10 @@ public class Clock implements Runnable {
                 long seconds = (remainingTime / 1000) % 60;
                 long millis = (remainingTime % 1000) / 100;
                 String timeString = String.format("%02d.%01d", seconds, millis);
-                TestMain.updateLabel(timeString);
+                BearAttack.updateLabel(timeString);
             } else {
-                TestMain.updateLabel("Waktu HABIS!!!");
-                TestMain.stopTimer(); // Signal the main thread that the timer has finished
+                BearAttack.updateLabel("Waktu HABIS!!!");
+                BearAttack.stopTimer(); // Signal the main thread that the timer has finished
                 break;
             }
 

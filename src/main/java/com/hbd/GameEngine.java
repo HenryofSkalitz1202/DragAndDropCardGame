@@ -2,6 +2,9 @@ package com.hbd;
 
 import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.Kartu.FactoryKartu;
+import com.hbd.Kartu.KartuGUI;
+import com.hbd.Kartu.Item.Item;
+import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.Kartu.Produk.Produk;
 import com.hbd.Pemain.Pemain;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
@@ -11,44 +14,40 @@ import com.hbd.SimpanMuat.Notaris;
 import com.hbd.SimpanMuat.PlayerState;
 import com.hbd.Toko.Toko;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GameEngine{
+public class GameEngine {
     private static GameEngine instance = null;
     private static final Librarian librarian = new Librarian();
     private Pemain pemain1 = null;
     private Pemain pemain2 = null;
     private int nomorTurn = 1;
-    private Pemain currentPemain = null;
+    private static Pemain currentPemain = null;
     private final Notaris notaris = new Notaris();
 
-    private GameEngine(){
+    private GameEngine() {
         System.out.println("Game Engine Has Been Created");
     }
 
-    public static synchronized GameEngine getInstance()
-    {
-        if (instance == null)
+    public static synchronized GameEngine getInstance() {
+        if (instance == null) {
             instance = new GameEngine();
-
+        }
         return instance;
     }
 
-    public static synchronized void resetInstance(){
+    public static synchronized void resetInstance() {
         instance = new GameEngine();
     }
 
-    public static synchronized void loadInstance(GameState gameState, PlayerState player1State, PlayerState player2State){
+    public static synchronized void loadInstance(GameState gameState, PlayerState player1State, PlayerState player2State) {
         instance.nomorTurn = gameState.getCurrentTurn();
 
         Toko.resetInstance();
 
-        for (Map.Entry<String, Integer> shop_item : gameState.getShopItems().entrySet()){
-            for (int i = 0; i < shop_item.getValue(); i++){
+        for (Map.Entry<String, Integer> shop_item : gameState.getShopItems().entrySet()) {
+            for (int i = 0; i < shop_item.getValue(); i++) {
                 Toko.getInstance().tambahItemKeToko((Produk) FactoryKartu.getKartu(shop_item.getKey()));
             }
         }
@@ -65,15 +64,15 @@ public class GameEngine{
         instance.pemain2.setDeckAktif(player2State.getActiveDeck());
         instance.pemain2.setPetakLadang(player2State.getPetakLadang());
 
-        if (instance.nomorTurn % 2 == 1){
+        if (instance.nomorTurn % 2 == 1) {
             instance.currentPemain = instance.pemain1;
         } else {
             instance.currentPemain = instance.pemain2;
         }
     }
 
-    public void start(){
-
+    public static void start() {
+        KartuGUI.initializePaths();
     }
 
     public void next() throws DeckPenuhException {
@@ -81,14 +80,17 @@ public class GameEngine{
         pemain2.updateUmurPetak();
         nomorTurn++;
 
-        if (nomorTurn % 2 == 1) {currentPemain = pemain1;}
-        else {currentPemain = pemain2;}
+        if (nomorTurn % 2 == 1) {
+            currentPemain = pemain1;
+        } else {
+            currentPemain = pemain2;
+        }
         fasePengocokkan();
         faseBebas();
         // Tentukan apakah akan terjadi serangan beruang
     }
 
-    public void fasePengocokkan(){
+    public void fasePengocokkan() {
         // Shuffle Kartu hingga pemain puas
     }
 
@@ -96,16 +98,38 @@ public class GameEngine{
         // Bebas ngapain aja
     }
 
-    public static void main(String[] args) throws DiluarPetakException, IOException, DeckPenuhException {
+    public static void faseBearAttack() throws Exception {
+        BearAttack.startBearAttack(currentPemain.getPetakLadang(), currentPemain.getDeckAktif());
+    }
+
+    public static void main(String[] args) throws DiluarPetakException, IOException, DeckPenuhException, Exception {
+        start();
         GameEngine ge = GameEngine.getInstance();
-        librarian.load(librarian.getLanguageAtIndex(2), "cobayaml2");
+
+        currentPemain = new Pemain();
+        Item protectItem = (Item) FactoryKartu.getKartu("Protect");
+        Item trapItem = (Item) FactoryKartu.getKartu("Trap");
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                Makhluk hewanLadang;
+                if (i <= 2 && j <= 3) {
+                    hewanLadang = (Makhluk) FactoryKartu.getKartu("Sapi");
+                    currentPemain.getPetakLadang().setMakhluk(j, i, hewanLadang);
+                } else if (i == 3) {
+                    hewanLadang = (Makhluk) FactoryKartu.getKartu("Ayam");
+                    hewanLadang.hisabItem(protectItem);
+                    currentPemain.getPetakLadang().setMakhluk(j, i, hewanLadang);
+                } else {
+                    hewanLadang = (Makhluk) FactoryKartu.getKartu("Kuda");
+                    hewanLadang.hisabItem(trapItem);
+                    currentPemain.getPetakLadang().setMakhluk(j, i, hewanLadang);
+                }
+            }
+        }
 
         ge = GameEngine.getInstance();
-        librarian.save(ge.notaris.getGameState(ge.nomorTurn, Toko.getInstance()),
-                ge.notaris.getPlayerState(ge.pemain1),
-                ge.notaris.getPlayerState(ge.pemain2),
-                librarian.getLanguageAtIndex(2),
-                "cobayaml3"
-        );
+        faseBearAttack();
     }
 }
+
