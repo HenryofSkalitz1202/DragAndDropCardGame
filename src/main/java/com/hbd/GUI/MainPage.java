@@ -179,12 +179,12 @@ public class MainPage extends Application {
             /**
              * Card dilepaskan di petak ladang
              */
-            if (!(k.getKartu() instanceof Makhluk)) {
-                k.setX(initialX);
-                k.setY(initialY);
-                k.draw();
-                return;
-            }
+            // if (!(k.getKartu() instanceof Makhluk)) {
+            // k.setX(initialX);
+            // k.setY(initialY);
+            // k.draw();
+            // return;
+            // }
 
             int id_x = (int) ((card_middle_x - BASE_LADANG_X) / LADANG_TILE_WIDTH);
             int id_y = (int) ((card_middle_y - BASE_LADANG_Y) / LADANG_TILE_HEIGHT);
