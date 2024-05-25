@@ -15,29 +15,32 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    private static MainPage mainPage;
+    public static ShuffleController shuffleController = new ShuffleController();
 
     @Override
     public void start(Stage stage) throws IOException {
-        AnchorPane root = (AnchorPane) loadFXML("main");
-        scene = new Scene(root, 890, 667);
-
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        mainPage = new MainPage();
+        mainPage.start(stage);
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static AnchorPane getPane(){
+        return mainPage.getCurrentPane();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static ShuffleController getShuffleController(){
+        return shuffleController;
     }
 
-    public static void main(String[] args) {
+    public static MainController getMainController(){
+        return mainPage.getController();
+    }
+
+    public static MainPage getMainPage(){
+        return mainPage;
+    }
+
+    public static void main(String args[]){
         launch();
     }
-
 }

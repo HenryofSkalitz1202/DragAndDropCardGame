@@ -25,6 +25,7 @@ module com.hbd {
     exports com.hbd.Kartu.Makhluk;
     exports com.hbd.Kartu.Produk;
     exports com.hbd.GUI;
+    exports com.hbd.SimpanMuat.Language;
     opens com.hbd.GUI to javafx.fxml;
 
 }

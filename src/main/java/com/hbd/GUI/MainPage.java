@@ -4,12 +4,14 @@ import com.hbd.Deck.Deck;
 import com.hbd.Deck.Exception.DeckEmptyException;
 import com.hbd.Deck.Exception.DeckOutOfBoundsException;
 import com.hbd.Deck.Exception.DeckPenuhException;
+import com.hbd.GameEngine;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
 import com.hbd.PetakLadang.PetakLadang;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -17,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,18 +34,21 @@ public class MainPage extends Application {
     private Scene scene;
     private List<KartuGUI> pageKartu = new ArrayList<>();
     private AnchorPane currentPane;
+    boolean hasStarted = false;
 
     private MainController controller;
 
     private double initialX, initialY;
     private boolean fromDeck = false, fromLadang = false;
 
+    private List<Node> ProperSetting;
+
     private static final Double BASE_LADANG_X = 255.0;
     private static final Double WIDTH_LADANG = 434.0;
     private static final Double BASE_LADANG_Y = 131.0;
     private static final Double HEIGHT_LADANG = 353.74;
     private static final Double BASE_DECK_AKTIF_X = 141.6;
-    private static final Double WIDTH_DECK_AKTIF = 580.0;
+    private static final Double WIDTH_DECK_AKTIF = 560.0;
     private static final Double BASE_DECK_AKTIF_Y = 555.0;
     private static final Double HEIGHT_DECK_AKTIF = 101.6;
     private static final Double LADANG_TILE_WIDTH = WIDTH_LADANG/5;
@@ -52,33 +58,71 @@ public class MainPage extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        hasStarted = true;
         controller = new MainController();
         controller.initializeGame();
 
-        try {
-            controller.getCurrentDeckAktif().addRandom(2);
-        } catch (DeckPenuhException e) {
-            throw new RuntimeException(e);
-        }
-
-        currentPane = (AnchorPane) loadFXML("main");
-        getCard();
-        updateCard();
-        scene = new Scene(currentPane, 890, 667);
+        initializeEverything();
+        loadCard();
+        loadGameState();
 
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
 
-    public void loadEverything() throws IOException{
+    public void switchTo(){
+
+        if (!App.getPane().getChildren().isEmpty()) {
+            App.getPane().getChildren().subList(0, App.getPane().getChildren().size()).clear();
+        }
+
+        for (Node node : ProperSetting){
+            currentPane.getChildren().add(node);
+        }
+
+        loadCard();
+        loadGameState();
+    }
+
+    private void initializeEverything() throws IOException {
         currentPane = (AnchorPane) loadFXML("main");
-        updateCard();
+        ProperSetting = new ArrayList<>(currentPane.getChildren());
         scene = new Scene(currentPane, 890, 667);
     }
 
-    static void setRoot(String fxml) throws IOException {
-        ;
+    public void loadCard(){
+        getCard();
+        updateCard();
+    }
+
+    public void loadGameState(){
+        int turnNumber = controller.getCurrentTurn();
+        int player1duit = controller.getCurrentPlayer1Duit();
+        int player2duit = controller.getCurrentPlayer2Duit();
+
+        String currentlyPlaying = "Pemain 1";
+        if (turnNumber % 2 == 0){
+            currentlyPlaying = "Pemain 2";
+        }
+
+        Text currentPlayerText = new Text(currentlyPlaying + " Turn");
+        AnchorPane.setTopAnchor(currentPlayerText, 215.93);
+        AnchorPane.setLeftAnchor(currentPlayerText, 24.34);
+
+        Text currentTurnText = new Text(String.valueOf(turnNumber));
+        AnchorPane.setLeftAnchor(currentTurnText, 85.46);
+        AnchorPane.setTopAnchor(currentTurnText, 255.12);
+
+        Text currentPlayer1DuitText = new Text(String.valueOf(player1duit));
+        AnchorPane.setLeftAnchor(currentPlayer1DuitText, 100.22);
+        AnchorPane.setTopAnchor(currentPlayer1DuitText, 319.10);
+
+        Text currentPlayer2DuitText = new Text(String.valueOf(player2duit));
+        AnchorPane.setLeftAnchor(currentPlayer2DuitText, 100.22);
+        AnchorPane.setTopAnchor(currentPlayer2DuitText, 380.69);
+
+        currentPane.getChildren().addAll(currentPlayerText, currentTurnText, currentPlayer1DuitText, currentPlayer2DuitText);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -112,12 +156,6 @@ public class MainPage extends Application {
 
         k.setColor(Color.TEAL);
         k.setImg();
-        if (!(k.getKartu() instanceof Makhluk)){
-            k.setX(initialX);
-            k.setY(initialY);
-            k.draw();
-            return;
-        }
 
         double card_middle_x = k.getX() + k.getRect().getWidth()/2.0;
         double card_middle_y = k.getY() + k.getRect().getHeight()/2.0;
@@ -136,6 +174,13 @@ public class MainPage extends Application {
             /**
              * Card dilepaskan di petak ladang
              */
+            if (!(k.getKartu() instanceof Makhluk)){
+                k.setX(initialX);
+                k.setY(initialY);
+                k.draw();
+                return;
+            }
+
             int id_x = (int)((card_middle_x - BASE_LADANG_X)/LADANG_TILE_WIDTH);
             int id_y = (int)((card_middle_y - BASE_LADANG_Y)/LADANG_TILE_HEIGHT);
 
@@ -144,11 +189,14 @@ public class MainPage extends Application {
             } catch (DiluarPetakException e) {throw new RuntimeException("WAA HOW");}
         } else if (card_middle_x >= BASE_DECK_AKTIF_X && card_middle_x <= BASE_DECK_AKTIF_X + WIDTH_DECK_AKTIF && card_middle_y <= BASE_DECK_AKTIF_Y + HEIGHT_DECK_AKTIF && card_middle_y >= BASE_DECK_AKTIF_Y) {
 
+            /**
+             * Card dilepaskan di petak deck
+             */
             int id_y = 0;
             int id_x = (int)((card_middle_x - BASE_DECK_AKTIF_X)/(DECK_AKTIF_TILE_WIDTH));
 
             try {
-                controller.LetGoHandler((Makhluk) k.getKartu(), id_y, id_x, initial_y_id, initial_x_id, fromLadang, false);
+                controller.LetGoHandler(k.getKartu(), id_y, id_x, initial_y_id, initial_x_id, fromLadang, false);
             } catch (DiluarPetakException e) {throw new RuntimeException("WAA HOW");}
         }
 
@@ -194,6 +242,12 @@ public class MainPage extends Application {
             } catch (DeckOutOfBoundsException | DeckEmptyException e) {/* Tidak akan terjadi */}
         }
     }
+
+    public AnchorPane getCurrentPane(){
+        return currentPane;
+    }
+
+    public MainController getController() {return controller;}
 
     public static void main(String[] args) {
         launch();

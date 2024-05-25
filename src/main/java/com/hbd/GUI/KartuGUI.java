@@ -17,7 +17,8 @@ public class KartuGUI {
     private double h;
     private double w;
     private Rectangle rect;
-    private Map<String, String> imgPath = Stream.of(new String[][] {
+
+    private static Map<String, String> imgPath = Stream.of(new String[][] {
             { "Ayam", "/img/animal/chicken.jpg" },
             { "Beruang", "/img/animal/bear.jpg" },
             { "Domba", "/img/animal/domba.jpg" },
@@ -27,7 +28,7 @@ public class KartuGUI {
             { "Accelerate", "/img/item/accelerate.png" },
             { "Delay", "/img/item/delay.jpg" },
             { "Destroy", "/img/item/destroy.jpg" },
-            { "Harvest", "/img/item/harvest.JPG" },
+            { "Instant Harvest", "/img/item/harvest.JPG" },
             { "Protect", "/img/item/protect.jpg" },
             { "Trap", "/img/item/trap.jpg" },
             { "Biji Jagung", "/img/plant/corn_kernel.jpg" },
@@ -90,5 +91,9 @@ public class KartuGUI {
 
     public String getNama() {
         return this.kartu.getNama();
+    }
+
+    public static Map<String, String> getImagePathMap(){
+        return imgPath;
     }
 }

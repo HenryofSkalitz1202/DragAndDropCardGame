@@ -27,6 +27,11 @@ public class KartuContainer implements Iterable<Kartu> {
         capacity = n;
     }
 
+    public KartuContainer(List<Kartu> _Kartu, int size){
+        this(_Kartu);
+        capacity = size;
+    }
+
     public int size(){
         return Container.size();
     }
@@ -88,7 +93,7 @@ public class KartuContainer implements Iterable<Kartu> {
     }
 
     public void insertBanyakKartu(List<Kartu> banyakKartu) throws DeckPenuhException{
-        if (size() + banyakKartu.size() >= capacity && capacity != -1) {throw new DeckPenuhException("Deck sudah penuh");}
+        if (size() + banyakKartu.size() > capacity && capacity != -1) {throw new DeckPenuhException("Deck sudah penuh");}
         Container.addAll(banyakKartu);
     }
 

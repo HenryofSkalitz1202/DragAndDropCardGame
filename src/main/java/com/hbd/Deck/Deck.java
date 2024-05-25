@@ -16,6 +16,7 @@ public class Deck extends KartuContainer {
     public Deck(List<Kartu> KartuKartu) {
         super(KartuKartu);
     }
+    public Deck(List<Kartu> KartuKartu, int n) {super(KartuKartu, n);}
 
     public Deck(int n) {
         super(n);
