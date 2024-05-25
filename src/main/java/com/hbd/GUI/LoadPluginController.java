@@ -5,10 +5,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-// import javafx.stage.Stage;
 
-public class LoadStateController {
-
+public class LoadPluginController {
     @FXML
     private TextField format;
 
@@ -32,10 +30,3 @@ public class LoadStateController {
         stage.close();
     }
 }
-
-// public class PopupController {
-
-// @FXML
-// private Stage stage;
-
-// }

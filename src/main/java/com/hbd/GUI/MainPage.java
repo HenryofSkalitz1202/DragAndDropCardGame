@@ -3,6 +3,9 @@ package com.hbd.GUI;
 import com.hbd.Deck.Deck;
 import com.hbd.Deck.Exception.DeckEmptyException;
 import com.hbd.Deck.Exception.DeckOutOfBoundsException;
+import com.hbd.Deck.Exception.DeckPenuhException;
+import com.hbd.Clock;
+import com.hbd.GameEngine;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
@@ -12,7 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
@@ -27,6 +30,11 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * JavaFX App
@@ -44,6 +52,11 @@ public class MainPage extends Application {
     private boolean fromDeck = false, fromLadang = false;
 
     private List<Node> ProperSetting;
+
+    private static int countdownSeconds;
+    //private static volatile boolean timerRunning = true;
+    private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static Future<?> inputTask;
 
     private static final Double BASE_LADANG_X = 255.0;
     private static final Double WIDTH_LADANG = 434.0;
@@ -80,6 +93,16 @@ public class MainPage extends Application {
 
         for (Node node : ProperSetting) {
             currentPane.getChildren().add(node);
+        }
+
+        Random rand = new Random();
+        int randNum = rand.nextInt(10 - 1 + 1) + 1;
+        if(randNum > 7){
+            try{
+                App.getMainPage().bearAttack();
+            }catch (Exception e) {
+                // Handle any exceptions
+            }
         }
 
         loadCard();
@@ -134,7 +157,8 @@ public class MainPage extends Application {
 
     public void pressed(MouseEvent event, KartuGUI k) {
         k.setColor(Color.GREEN);
-        System.out.println("Hello " + k.getX() + " " + k.getY());
+        Pair<Integer, Integer> coor = ScreenCoordinateToLadang(k.getX(), k.getY());
+        System.out.println("Hello " + coor.getKey() + " " + coor.getValue());
         initialX = k.getX();
         initialY = k.getY();
         if (initialX >= BASE_LADANG_X && initialX <= BASE_LADANG_X + WIDTH_LADANG && initialY >= BASE_LADANG_Y
@@ -216,10 +240,10 @@ public class MainPage extends Application {
         }
     }
 
-    public void updateCard() {
 
-        for (int i = 0; i < currentPane.getChildren().size(); i++) {
-            if (currentPane.getChildren().get(i).getClass() == Rectangle.class) {
+    public void updateCard(){
+        for (int i = 0; i < currentPane.getChildren().size(); i++){
+            if (currentPane.getChildren().get(i).getClass() == Rectangle.class){
                 currentPane.getChildren().remove(i);
                 i--;
             }
@@ -266,9 +290,26 @@ public class MainPage extends Application {
         return currentPane;
     }
 
-    public MainController getController() {
-        return controller;
+
+    public void bearAttack() throws Exception {
+        Random rand = new Random();
+        countdownSeconds = rand.nextInt(60 - 30 + 1) + 30;
+
+        // Setup the time label for the countdown
+        Label timeLabel = new Label();
+        timeLabel.setLayoutX(800); // Adjust the position as needed
+        timeLabel.setLayoutY(50);  // Adjust the position as needed
+        currentPane.getChildren().add(timeLabel);
+        BearAttack.setTimeLabel(timeLabel);
+
+        List<int[]> attackedCells = BearAttack.generateAttackedCells();
+
+        // Start the attack countdown
+        BearAttack.startAttack(countdownSeconds, this);
     }
+
+    public MainController getController() {return controller;}
+
 
     public void phaseOut() {
         phasedOut = true;

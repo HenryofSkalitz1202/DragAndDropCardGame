@@ -86,6 +86,14 @@ public class KartuContainer implements Iterable<Kartu> {
         
         return result;
     }
+
+    public boolean isEmpty(){
+        return size() == 0;
+    }
+
+    public boolean isFull(){
+        return size() == capacity;
+    }
     
     public boolean isEmpty(){
         return size() == 0;
