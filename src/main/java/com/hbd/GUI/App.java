@@ -17,6 +17,7 @@ public class App extends Application {
 
     private static MainPage mainPage;
     public static ShuffleController shuffleController = new ShuffleController();
+    public static PopupInfoController popupInfoController = new PopupInfoController();
 
     @Override
     public void start(Stage stage) throws IOException {
