@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GameEngine{
+public class GameEngine {
     private static GameEngine instance = null;
     private static final Librarian librarian = new Librarian();
     private Pemain pemain1 = null;
@@ -31,29 +31,29 @@ public class GameEngine{
     private Pemain currentPemain = null;
     private final Notaris notaris = new Notaris();
 
-    private GameEngine(){
+    private GameEngine() {
         System.out.println("Game Engine Has Been Created");
     }
 
-    public static synchronized GameEngine getInstance()
-    {
+    public static synchronized GameEngine getInstance() {
         if (instance == null)
             instance = new GameEngine();
 
         return instance;
     }
 
-    public static synchronized void resetInstance(){
+    public static synchronized void resetInstance() {
         instance = new GameEngine();
     }
 
-    public static synchronized void loadInstance(GameState gameState, PlayerState player1State, PlayerState player2State){
+    public static synchronized void loadInstance(GameState gameState, PlayerState player1State,
+            PlayerState player2State) {
         instance.nomorTurn = gameState.getCurrentTurn();
 
         Toko.resetInstance();
 
-        for (Map.Entry<String, Integer> shop_item : gameState.getShopItems().entrySet()){
-            for (int i = 0; i < shop_item.getValue(); i++){
+        for (Map.Entry<String, Integer> shop_item : gameState.getShopItems().entrySet()) {
+            for (int i = 0; i < shop_item.getValue(); i++) {
                 Toko.getInstance().tambahItemKeToko((Produk) FactoryKartu.getKartu(shop_item.getKey()));
             }
         }
@@ -70,19 +70,20 @@ public class GameEngine{
         instance.pemain2.setDeckAktif(player2State.getActiveDeck());
         instance.pemain2.setPetakLadang(player2State.getPetakLadang());
 
-        if (instance.nomorTurn % 2 == 1){
+        if (instance.nomorTurn % 2 == 1) {
             instance.currentPemain = instance.pemain1;
         } else {
             instance.currentPemain = instance.pemain2;
         }
     }
 
-    public Pemain getCurrentPemain(){
+    public Pemain getCurrentPemain() {
         return currentPemain;
     }
 
-    public void initializeDefault(){
-        loadInstance(new GameState(1, new HashMap<>()), new PlayerState(0, 40, new Deck(6), new PetakLadang()), new PlayerState(0, 40, new Deck(6), new PetakLadang()));
+    public void initializeDefault() {
+        loadInstance(new GameState(1, new HashMap<>()), new PlayerState(0, 40, new Deck(6), new PetakLadang()),
+                new PlayerState(0, 40, new Deck(6), new PetakLadang()));
         try {
             pemain1.getDeckAktif().addRandom(2);
             pemain2.getDeckAktif().addRandom(2);
@@ -96,11 +97,10 @@ public class GameEngine{
                 notaris.getPlayerState(pemain1),
                 notaris.getPlayerState(pemain2),
                 lang,
-                FolderPath
-        );
+                FolderPath);
     }
 
-    public void start(){
+    public void start() {
 
     }
 
@@ -109,33 +109,37 @@ public class GameEngine{
         pemain2.updateUmurPetak();
         nomorTurn++;
 
-        if (nomorTurn % 2 == 1) {currentPemain = pemain1;}
-        else {currentPemain = pemain2;}
+        if (nomorTurn % 2 == 1) {
+            currentPemain = pemain1;
+        } else {
+            currentPemain = pemain2;
+        }
     }
 
-    public void loadFile(String path) throws Exception{
+    public void loadFile(String path) throws Exception {
         librarian.load(librarian.getLanguageAtIndex(0), path);
     }
 
-    public int getNomorTurn(){
+    public int getNomorTurn() {
         return nomorTurn;
     }
 
-    public int getPlayer1Duit(){
+    public int getPlayer1Duit() {
         return pemain1.getDuit();
     }
 
-    public int getPlayer2Duit(){
+    public int getPlayer2Duit() {
         return pemain2.getDuit();
     }
 
     public static void main(String args[]) throws IOException {
-        librarian.study("C:/Users/HP/Documents/Tugas_Coolyeah/semester_4/OOP/pluginCode/jsonPlugin/target/hbd_jsonPlugin-1.0-jar-with-dependencies.jar");
+        librarian.study(
+                "C:/Users/HP/Documents/Tugas_Coolyeah/semester_4/OOP/pluginCode/jsonPlugin/target/hbd_jsonPlugin-1.0-jar-with-dependencies.jar");
         try {
             librarian.load(librarian.getLanguageAtIndex(1), "cobajson");
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             /**/
-        } catch (DeckPenuhException | DiluarPetakException e){
+        } catch (DeckPenuhException | DiluarPetakException e) {
             /**/
         }
         getInstance().saveState(librarian.getLanguageAtIndex(0), "backtotxt");

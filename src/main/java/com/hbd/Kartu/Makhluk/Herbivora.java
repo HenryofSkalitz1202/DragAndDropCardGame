@@ -2,7 +2,6 @@ package com.hbd.Kartu.Makhluk;
 
 import com.hbd.Kartu.Makhluk.Exception.SalahMakanException;
 import com.hbd.Kartu.Produk.Produk;
-import com.hbd.Kartu.Produk.ProdukHewan;
 import com.hbd.Kartu.Produk.ProdukTanaman;
 
 public class Herbivora extends Hewan {

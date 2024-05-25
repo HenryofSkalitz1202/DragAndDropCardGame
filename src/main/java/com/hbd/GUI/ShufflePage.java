@@ -30,21 +30,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ShufflePage {
 
     private AnchorPane pane;
     private final ShuffleController myController;
 
-    public ShufflePage(ShuffleController controller){
+    public ShufflePage(ShuffleController controller) {
         myController = controller;
     }
 
-    public ShufflePage(){
+    public ShufflePage() {
         myController = new ShuffleController();
     }
 
-    public void switchTo(){
+    public void switchTo() {
 
         if (!App.getPane().getChildren().isEmpty()) {
             App.getPane().getChildren().subList(0, App.getPane().getChildren().size()).clear();
@@ -83,38 +82,38 @@ public class ShufflePage {
         pane.getChildren().add(accept);
     }
 
-    public void showCards(List<Kartu> kartukartu){
+    public void showCards(List<Kartu> kartukartu) {
         int numKartu = kartukartu.size();
         showFirstCard(kartukartu.get(0), numKartu);
-        if (numKartu > 1){
+        if (numKartu > 1) {
             showSecondCard(kartukartu.get(1), numKartu);
         }
-        if (numKartu > 2){
+        if (numKartu > 2) {
             showThirdCard(kartukartu.get(2), numKartu);
         }
-        if (numKartu > 3){
+        if (numKartu > 3) {
             showFourthCard(kartukartu.get(3));
         }
     }
 
-    private void showFirstCard(Kartu kartu, int numKartu){
+    private void showFirstCard(Kartu kartu, int numKartu) {
         StackPane card = new DealedCardGUI(kartu);
-        if (numKartu == 4 || numKartu == 3){
+        if (numKartu == 4 || numKartu == 3) {
             AnchorPane.setTopAnchor(card, 122.0);
             AnchorPane.setLeftAnchor(card, 238.0);
         } else if (numKartu == 2) {
             AnchorPane.setTopAnchor(card, 244.0);
             AnchorPane.setLeftAnchor(card, 238.0);
-        } else if (numKartu == 1){
+        } else if (numKartu == 1) {
             AnchorPane.setTopAnchor(card, 244.0);
             AnchorPane.setLeftAnchor(card, 385.0);
         }
         pane.getChildren().add(card);
     }
 
-    private void showSecondCard(Kartu kartu, int numKartu){
+    private void showSecondCard(Kartu kartu, int numKartu) {
         StackPane card = new DealedCardGUI(kartu);
-        if (numKartu == 4 || numKartu == 3){
+        if (numKartu == 4 || numKartu == 3) {
             AnchorPane.setTopAnchor(card, 122.0);
             AnchorPane.setLeftAnchor(card, 509.0);
         } else if (numKartu == 2) {
@@ -124,9 +123,9 @@ public class ShufflePage {
         pane.getChildren().add(card);
     }
 
-    private void showThirdCard(Kartu kartu, int numKartu){
+    private void showThirdCard(Kartu kartu, int numKartu) {
         StackPane card = new DealedCardGUI(kartu);
-        if (numKartu == 4){
+        if (numKartu == 4) {
             AnchorPane.setTopAnchor(card, 364.0);
             AnchorPane.setLeftAnchor(card, 238.0);
         } else if (numKartu == 3) {
@@ -136,7 +135,7 @@ public class ShufflePage {
         pane.getChildren().add(card);
     }
 
-    private void showFourthCard(Kartu kartu){
+    private void showFourthCard(Kartu kartu) {
         StackPane card = new DealedCardGUI(kartu);
         AnchorPane.setTopAnchor(card, 364.0);
         AnchorPane.setLeftAnchor(card, 509.0);
