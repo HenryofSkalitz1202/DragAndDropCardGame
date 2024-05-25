@@ -38,7 +38,7 @@
         <TextField fx:id="folder" layoutX="213.0" layoutY="147.0" prefHeight="50.0" prefWidth="257.0" />
       <ImageView fitHeight="21.0" fitWidth="142.0" layoutX="240.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@img/FontLoadState.png" />
+            <Image url="@img/FontSaveState.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="14.0" fitWidth="62.0" layoutX="131.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">

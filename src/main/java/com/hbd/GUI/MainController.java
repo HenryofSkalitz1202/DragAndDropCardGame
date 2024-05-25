@@ -56,6 +56,20 @@ public class MainController {
     @FXML
     private void ButtonSaveState(ActionEvent event) {
         System.out.println("Test4");
+        Stage stage = new Stage();
+        stage.setTitle("Save State");
+
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("savestate");
+
+        if (view != null) {
+            Scene scene = new Scene(view, 600, 400);
+            stage.setScene(scene);
+            stage.show();
+            System.out.println("Scene displayed successfully");
+        } else {
+            System.out.println("Failed to load view");
+        }
 
     }
 
