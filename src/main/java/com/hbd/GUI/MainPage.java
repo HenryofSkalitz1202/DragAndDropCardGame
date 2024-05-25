@@ -15,7 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
@@ -93,6 +93,16 @@ public class MainPage extends Application {
 
         for (Node node : ProperSetting){
             currentPane.getChildren().add(node);
+        }
+
+        Random rand = new Random();
+        int randNum = rand.nextInt(10 - 1 + 1) + 1;
+        if(randNum > 7){
+            try{
+                App.getMainPage().bearAttack();
+            }catch (Exception e) {
+                // Handle any exceptions
+            }
         }
 
         loadCard();
@@ -268,9 +278,16 @@ public class MainPage extends Application {
     public void bearAttack() throws Exception {
         Random rand = new Random();
         countdownSeconds = rand.nextInt(60 - 30 + 1) + 30;
-    
-        //List<int[]> attackedCells = BearAttack.generateAttackedCells();
-    
+
+        // Setup the time label for the countdown
+        Label timeLabel = new Label();
+        timeLabel.setLayoutX(800); // Adjust the position as needed
+        timeLabel.setLayoutY(50);  // Adjust the position as needed
+        currentPane.getChildren().add(timeLabel);
+        BearAttack.setTimeLabel(timeLabel);
+
+        List<int[]> attackedCells = BearAttack.generateAttackedCells();
+
         // Start the attack countdown
         BearAttack.startAttack(countdownSeconds, this);
     }

@@ -10,10 +10,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.hbd.Deck.Deck;
-import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
+import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.PetakLadang.PetakLadang;
 import com.hbd.Clock;
 
@@ -101,10 +101,19 @@ public class BearAttack {
 
         // Update cards and handle attack after countdown
         inputTask = executorService.submit(() -> {
-            while (timerRunning) {
+            int remainingSeconds = countdownSeconds;
+            while (timerRunning && remainingSeconds > 0) {
                 try {
                     Thread.sleep(1000); // Wait 1 second
-                    Platform.runLater(() -> mainPage.loadCard()); // Update UI
+                    remainingSeconds--;
+                    final int seconds = remainingSeconds;
+                    Platform.runLater(() -> {
+                        // Update the time label
+                        if (timeLabel != null) {
+                            timeLabel.setText("Time remaining: " + seconds + " seconds");
+                        }
+                        // mainPage.loadCard(); // Update UI
+                    });
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
