@@ -1,11 +1,18 @@
 package com.hbd.GUI;
 
 import com.hbd.Deck.Deck;
+import com.hbd.Deck.Exception.DeckEmptyException;
+import com.hbd.Deck.Exception.DeckOutOfBoundsException;
 import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.GameEngine;
-import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Kartu;
+import com.hbd.Kartu.Item.Item;
 import com.hbd.Kartu.Makhluk.Makhluk;
+import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
+import com.hbd.Kartu.Produk.Produk;
+import com.hbd.Pemain.Pemain;
+import com.hbd.Pemain.Exception.BerusahaMemberiItemKeMakhlukGaibException;
+import com.hbd.Pemain.Exception.IllegalItemException;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
 import com.hbd.PetakLadang.PetakLadang;
 import javafx.event.ActionEvent;
@@ -15,10 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainController {
 
@@ -122,47 +125,85 @@ public class MainController {
         }
     }
 
-    public void LetGoHandler(Kartu makhluk, int row, int column, int initialRow, int initialColumn, boolean fromLadang,
+    public void LetGoHandler(Kartu kartu, int row, int column, int initialRow, int initialColumn, boolean fromLadang,
             boolean toLadang) throws DiluarPetakException {
+        if (row == initialRow && column == initialColumn) {
+            App.popupInfoController.popupCard(column, row, fromLadang);
+            return;
+        }
         if (toLadang) {
             if (fromLadang) {
-                if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
-                    return;
-                } else {
-                    getCurrentPetakLadang().setMakhluk(column, row, (Makhluk) makhluk);
-                    getCurrentPetakLadang().setMakhluk(initialColumn, initialRow, null);
-                }
-            } else {
-                if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
-                    return;
-                } else {
-                    getCurrentPetakLadang().setMakhluk(column, row, (Makhluk) makhluk);
-                    try {
-                        getCurrentDeckAktif().takeKartuAt(initialColumn);
-                    } catch (Exception e) {
-                        ;
-                    }
-                }
+                MoveInLadang(kartu, row, column, initialRow, initialColumn);
+            } else /* From Hand */ {
+                PlaceToLadang(kartu, row, column, initialRow, initialColumn);
             }
-        } else {
+        } else /* To Hand */ {
             if (fromLadang) {
-                if (getCurrentDeckAktif().remainingSlot() == 0) {
-                    return;
-                } else {
-                    getCurrentPetakLadang().setMakhluk(initialColumn, initialRow, null);
-                    try {
-                        getCurrentDeckAktif().insertKartu(makhluk);
-                    } catch (DeckPenuhException e) {
-                        /* Tidak Mungkin */}
-                }
-            } else {
-                try {
-                    getCurrentDeckAktif().takeKartuAt(initialColumn);
-                    getCurrentDeckAktif().insertKartu(makhluk);
-                } catch (Exception e) {
-                    /* Tidak akan terjadi */}
+                WithdrawFromLadang(kartu, row, column, initialRow, initialColumn);
+            } else /* From Hand */ {
+                DeckReorder(kartu, row, column, initialRow, initialColumn);
             }
         }
+    }
+
+    private void MoveInLadang(Kartu kartu, int row, int column, int initialRow, int initialColumn)
+            throws DiluarPetakException {
+        if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
+            return;
+        } else {
+            getCurrentPetakLadang().setMakhluk(column, row, (Makhluk) kartu);
+            getCurrentPetakLadang().setMakhluk(initialColumn, initialRow, null);
+        }
+    }
+
+    private void PlaceToLadang(Kartu kartu, int row, int column, int initialRow, int initialColumn)
+            throws DiluarPetakException {
+        if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
+            if (kartu instanceof Item) {
+                try {
+                    getCurrentPemain().beriItemKeLadang(getCurrentPemain(), (Item) kartu, column, row);
+                    getCurrentDeckAktif().takeKartuAt(initialColumn);
+
+                } catch (DiluarPetakException | DeckPenuhException | DeckOutOfBoundsException | IllegalItemException
+                        | ItemTidakAdaException | DeckEmptyException
+                        | BerusahaMemberiItemKeMakhlukGaibException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            return;
+        } else {
+            if (kartu instanceof Item || kartu instanceof Produk) {
+                return;
+            }
+            getCurrentPetakLadang().setMakhluk(column, row, (Makhluk) kartu);
+            try {
+                getCurrentDeckAktif().takeKartuAt(initialColumn);
+            } catch (Exception e) {
+                ;
+            }
+        }
+    }
+
+    private void WithdrawFromLadang(Kartu kartu, int row, int column, int initialRow, int initialColumn)
+            throws DiluarPetakException {
+        if (getCurrentDeckAktif().remainingSlot() == 0) {
+            return;
+        } else {
+            getCurrentPetakLadang().setMakhluk(initialColumn, initialRow, null);
+            try {
+                getCurrentDeckAktif().insertKartu(kartu);
+            } catch (DeckPenuhException e) {
+                /* Tidak Mungkin */}
+        }
+    }
+
+    private void DeckReorder(Kartu kartu, int row, int column, int initialRow, int initialColumn)
+            throws DiluarPetakException {
+        try {
+            getCurrentDeckAktif().takeKartuAt(initialColumn);
+            getCurrentDeckAktif().insertKartu(kartu);
+        } catch (Exception e) {
+            /* Tidak akan terjadi */}
     }
 
     public void initializeGame() {
@@ -187,5 +228,9 @@ public class MainController {
 
     public int getCurrentPlayer2Duit() {
         return GameEngine.getInstance().getPlayer2Duit();
+    }
+
+    public Pemain getCurrentPemain() {
+        return GameEngine.getInstance().getCurrentPemain();
     }
 }
