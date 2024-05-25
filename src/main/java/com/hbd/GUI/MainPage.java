@@ -368,6 +368,21 @@ public class MainPage extends Application {
         return new Pair<>(BASE_LADANG_X + x * LADANG_TILE_WIDTH, BASE_LADANG_Y + y * LADANG_TILE_HEIGHT);
     }
 
+    public void highlightCell(int row, int col, Color color) {
+        // Calculate the position and size of the rectangle
+        double x = BASE_LADANG_X + col * LADANG_TILE_WIDTH;
+        double y = BASE_LADANG_Y + row * LADANG_TILE_HEIGHT;
+        Rectangle highlight = new Rectangle(LADANG_TILE_WIDTH, LADANG_TILE_HEIGHT);
+        highlight.setX(x);
+        highlight.setY(y);
+        highlight.setFill(color);
+        highlight.setOpacity(0.5);  // Set opacity to make the highlight semi-transparent
+    
+        // Add the rectangle to the pane
+        currentPane.getChildren().add(highlight);
+    }
+    
+
     public static void main(String[] args) {
         launch();
     }

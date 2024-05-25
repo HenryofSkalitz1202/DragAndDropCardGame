@@ -2,6 +2,8 @@ package com.hbd.GUI;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -56,41 +58,48 @@ public class BearAttack {
         return attackedCells;
     }
 
-    public static void attack(PetakLadang ladang, Deck deckAktif, List<int[]> attackedCells) throws DiluarPetakException, DeckPenuhException {
-        boolean trapped = false;
+    public static void attack(PetakLadang ladang, Deck deckAktif, List<int[]> attackedCells, MainPage mainPage) throws DiluarPetakException, DeckPenuhException {
+    boolean trapped = false;
 
-        for (int[] cell : attackedCells) {
-            Makhluk makhlukCell = ladang.getMakhluk(cell[1], cell[0]);
-            if (makhlukCell == null) {
-                System.out.printf("(%d, %d) is empty\n", cell[1], cell[0]);
-            } else {
-                boolean isProtected = false;
-                for (String effect : makhlukCell.getEffect()) {
-                    if (effect.equals("Protect")) {
-                        System.out.printf("(%d, %d) is protected\n", cell[1], cell[0]);
-                        isProtected = true;
-                        break;
-                    } else if (effect.equals("Trap")) {
-                        System.out.printf("(%d, %d) traps beruang!!\n", cell[1], cell[0]);
-                        if (!deckAktif.isFull()) {
-                            deckAktif.insertKartu(FactoryKartu.getKartu("Beruang"));
-                        }
-                        trapped = true;
-                        break;
+    for (int[] cell : attackedCells) {
+        Makhluk makhlukCell = ladang.getMakhluk(cell[1], cell[0]);
+        if (makhlukCell == null) {
+            System.out.printf("(%d, %d) is empty\n", cell[1], cell[0]);
+        } else {
+            boolean isProtected = false;
+            for (String effect : makhlukCell.getEffect()) {
+                if (effect.equals("Protect")) {
+                    System.out.printf("(%d, %d) is protected\n", cell[1], cell[0]);
+                    isProtected = true;
+                    break;
+                } else if (effect.equals("Trap")) {
+                    System.out.printf("(%d, %d) traps beruang!!\n", cell[1], cell[0]);
+                    if (!deckAktif.isFull()) {
+                        deckAktif.insertKartu(FactoryKartu.getKartu("Beruang"));
                     }
-                }
-
-                if (trapped) {
+                    trapped = true;
                     break;
                 }
+            }
 
-                if (!isProtected) {
-                    System.out.printf("(%d, %d) is attacked\n", cell[1], cell[0]);
-                    ladang.setNull(cell[1], cell[0]);
-                }
+            if (trapped) {
+                break;
+            }
+
+            if (!isProtected) {
+                System.out.printf("(%d, %d) is attacked\n", cell[1], cell[0]);
+                ladang.setNull(cell[1], cell[0]);
             }
         }
     }
+
+    Platform.runLater(() -> {
+        for (int[] cell : attackedCells) {
+            mainPage.highlightCell(cell[0], cell[1], Color.RED);  // Use row and column correctly
+        }
+    });
+}
+
 
     public static void startAttack(int countdownSeconds, MainPage mainPage) {
         timerRunning = true;
@@ -106,7 +115,7 @@ public class BearAttack {
 
             Platform.runLater(() -> {
                 try {
-                    attack(mainPage.getController().getCurrentPetakLadang(), mainPage.getController().getCurrentDeckAktif(), attackedCells);
+                    attack(mainPage.getController().getCurrentPetakLadang(), mainPage.getController().getCurrentDeckAktif(), attackedCells, mainPage);
                     mainPage.loadCard();
                 } catch (Exception e) {
                     System.out.println("Error during bear attack: " + e.getMessage());
