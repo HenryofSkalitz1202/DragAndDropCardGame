@@ -128,16 +128,4 @@ public class GameEngine{
     public int getPlayer2Duit(){
         return pemain2.getDuit();
     }
-
-    public static void main(String args[]) throws IOException {
-        librarian.study("C:/Users/HP/Documents/Tugas_Coolyeah/semester_4/OOP/pluginCode/jsonPlugin/target/hbd_jsonPlugin-1.0-jar-with-dependencies.jar");
-        try {
-            librarian.load(librarian.getLanguageAtIndex(1), "cobajson");
-        } catch (FileNotFoundException e){
-            /**/
-        } catch (DeckPenuhException | DiluarPetakException e){
-            /**/
-        }
-        getInstance().saveState(librarian.getLanguageAtIndex(0), "backtotxt");
-    }
 }
