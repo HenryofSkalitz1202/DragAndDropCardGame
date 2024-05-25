@@ -10,30 +10,30 @@ public class KartuGUI{
     private static final HashMap<String, String> imagePaths = new HashMap<String, String>();
 
     public static void initializePaths(){
-        imagePaths.put("Hiu Darat", "img\\animal\\hiu_darat.jpg");
-        imagePaths.put("Kuda", "img\\animal\\horse.jpg");
-        imagePaths.put("Domba", "img\\animal\\domba.jpg");
-        imagePaths.put("Sapi", "img\\animal\\sapi.jpg");
-        imagePaths.put("Ayam", "img\\animal\\chicken.jpg");
-        imagePaths.put("Beruang", "img\\animal\\bear.jpg");
-        imagePaths.put("Biji Jagung", "img\\plant\\corn_kernel.jpg");
-        imagePaths.put("Biji Labu", "img\\plant\\pumpkin_seed.png");
-        imagePaths.put("Biji Stroberi", "img\\plant\\strawberry_seed.jpg");
-        imagePaths.put("Sirip Hiu", "img\\productanimal\\shark_fin.jpg");
-        imagePaths.put("Susu", "img\\productanimal\\milk.png");
-        imagePaths.put("Daging Domba", "img\\productanimal\\mutton.jpg");
-        imagePaths.put("Daging Kuda", "img\\productanimal\\horse_meat.png");
-        imagePaths.put("Telur", "img\\productanimal\\egg.jpg");
-        imagePaths.put("Daging Beruang", "img\\productanimal\\bear_meat.jpg");
-        imagePaths.put("Jagung", "img\\productplant\\corn.jpg");
-        imagePaths.put("Labu", "img\\productplant\\pumpkin.jpg");
+        imagePaths.put("Hiu Darat", "img\\animal\\hiu darat.png");
+        imagePaths.put("Kuda", "img\\animal\\horse.png");
+        imagePaths.put("Domba", "img\\animal\\sheep.png");
+        imagePaths.put("Sapi", "img\\animal\\cow.png");
+        imagePaths.put("Ayam", "img\\animal\\chicken.png");
+        imagePaths.put("Beruang", "img\\animal\\bear.png");
+        imagePaths.put("Biji Jagung", "img\\plant\\corn seeds.png");
+        imagePaths.put("Biji Labu", "img\\plant\\pumpkin seeds.png");
+        imagePaths.put("Biji Stroberi", "img\\plant\\strawberry seeds.png");
+        imagePaths.put("Sirip Hiu", "img\\productanimal\\shark-fin.png");
+        imagePaths.put("Susu", "img\\productanimal\\susu.png");
+        imagePaths.put("Daging Domba", "img\\productanimal\\Daging Domba.png");
+        imagePaths.put("Daging Kuda", "img\\productanimal\\Daging Kuda.png");
+        imagePaths.put("Telur", "img\\productanimal\\telur.png");
+        imagePaths.put("Daging Beruang", "img\\productanimal\\Daging Beruang.png");
+        imagePaths.put("Jagung", "img\\productplant\\corn.png");
+        imagePaths.put("Labu", "img\\productplant\\pumpkin.png");
         imagePaths.put("Stroberi", "img\\productplant\\strawberry.png");
-        imagePaths.put("Accelerate", "img\\item\\accelerate.png");
-        imagePaths.put("Delay", "img\\item\\delay.jpg");
-        imagePaths.put("Instant Harvest", "img\\item\\harvest.JPG");
-        imagePaths.put("Destroy", "img\\item\\destroy.jpg");
-        imagePaths.put("Protect", "img\\item\\protect.jpg");
-        imagePaths.put("Trap", "img\\item\\trap.jpg");
+        imagePaths.put("Accelerate", "img\\item\\Accelerate.png");
+        imagePaths.put("Delay", "img\\item\\Delay.png");
+        imagePaths.put("Instant Harvest", "img\\item\\Instant Harvest.png");
+        imagePaths.put("Destroy", "img\\item\\Destroy.png");
+        imagePaths.put("Protect", "img\\item\\Protect.png");
+        imagePaths.put("Trap", "img\\item\\bear trap.png");
     }
 
     public KartuGUI(Kartu kartu){
