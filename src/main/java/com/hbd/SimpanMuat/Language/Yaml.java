@@ -4,7 +4,7 @@ import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Yaml implements Language{
+public class Yaml implements Language {
 
     @Override
     public Object AddElement(Object current, String key, Object value) {
