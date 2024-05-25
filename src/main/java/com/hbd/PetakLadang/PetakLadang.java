@@ -90,6 +90,25 @@ public class PetakLadang implements Iterable<Makhluk> {
         return false;
     }
 
+    public void printLadang() {
+        System.out.println("Petak Ladang:");
+        for (int i = 0; i < tinggi; i++) {
+            for (int j = 0; j < lebar; j++) {
+                try {
+                    Makhluk makhluk = getMakhluk(j, i);
+                    if (makhluk != null) {
+                        System.out.print(makhluk.getNama() + "\t");
+                    } else {
+                        System.out.print("null\t");
+                    }
+                } catch (DiluarPetakException e) {
+                    System.out.print("null\t");
+                }
+            }
+            System.out.println();
+        }
+    }
+
     /* Diimplementasikan Iterator untuk PetakLadang */
     @Override
     public Iterator<Makhluk> iterator() {

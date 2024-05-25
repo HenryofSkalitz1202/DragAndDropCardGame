@@ -19,23 +19,25 @@ public class Librarian {
     private List<Language> Languages;
     private Scholar otherPersonality;
 
-    public Librarian(){
+    public Librarian() {
         Languages = new ArrayList<>();
         otherPersonality = new Scholar();
         Languages.add(new Txt());
     }
 
-    public void save(GameState gameState, PlayerState player1State, PlayerState player2State, Language lang, String FolderName) throws IOException{
+    public void save(GameState gameState, PlayerState player1State, PlayerState player2State, Language lang,
+            String FolderName) throws IOException {
         Object gameStateObj = lang.getInitialFormat();
 
         gameStateObj = lang.AddElement(gameStateObj, "CURRENT_TURN", String.valueOf(gameState.getCurrentTurn()));
 
         List<Map<String, String>> formattedShopItems = new ArrayList<>();
 
-        for (Map.Entry<String, Integer> entry : gameState.getShopItems().entrySet()){
+        for (Map.Entry<String, Integer> entry : gameState.getShopItems().entrySet()) {
             formattedShopItems.add(new LinkedHashMap<>());
             formattedShopItems.get(formattedShopItems.size() - 1).put("NAMA_PRODUK", entry.getKey());
-            formattedShopItems.get(formattedShopItems.size() - 1).put("JUMLAH_PRODUK", String.valueOf(entry.getValue()));
+            formattedShopItems.get(formattedShopItems.size() - 1).put("JUMLAH_PRODUK",
+                    String.valueOf(entry.getValue()));
         }
 
         gameStateObj = lang.AddElement(gameStateObj, "SHOP_ITEMS", formattedShopItems);
@@ -63,12 +65,16 @@ public class Librarian {
         File folder = new File("config" + File.separator + FolderName);
         folder.mkdirs();
 
-        writeToFileInFolder(gameStateString, "config" + File.separator + FolderName + File.separator + "gamestate." + lang.getExtension());
-        writeToFileInFolder(player1String, "config" + File.separator + FolderName + File.separator + "player1." + lang.getExtension());
-        writeToFileInFolder(player2String, "config" + File.separator + FolderName + File.separator + "player2." + lang.getExtension());
+        writeToFileInFolder(gameStateString,
+                "config" + File.separator + FolderName + File.separator + "gamestate." + lang.getExtension());
+        writeToFileInFolder(player1String,
+                "config" + File.separator + FolderName + File.separator + "player1." + lang.getExtension());
+        writeToFileInFolder(player2String,
+                "config" + File.separator + FolderName + File.separator + "player2." + lang.getExtension());
     }
 
-    public void load(Language lang, String folderPath) throws FileNotFoundException, DiluarPetakException, DeckPenuhException {
+    public void load(Language lang, String folderPath)
+            throws FileNotFoundException, DiluarPetakException, DeckPenuhException {
         GameState gameState = loadGameState(lang, "config" + File.separator + folderPath);
         PlayerState player1State = loadPlayerState(lang, "config" + File.separator + folderPath, 1);
         PlayerState player2State = loadPlayerState(lang, "config" + File.separator + folderPath, 2);
@@ -76,39 +82,41 @@ public class Librarian {
         GameEngine.loadInstance(gameState, player1State, player2State);
     }
 
-    public List<String> getPossibleLanguages(){
+    public List<String> getPossibleLanguages() {
         List<String> result = new ArrayList<>();
 
-        for (Language language : Languages){
+        for (Language language : Languages) {
             result.add(language.getClass().toString());
         }
 
         return result;
     }
 
-    public Language getLanguageAtIndex(int idx){
+    public Language getLanguageAtIndex(int idx) {
         return Languages.get(idx);
     }
+
     public List<String> getLanguagesOptions() {
         List<String> result = new ArrayList<>();
-        for (Language language : Languages){
+        for (Language language : Languages) {
             result.add(language.getExtension());
         }
         return result;
     }
 
-    public void study(String JarPath) throws IOException{
+    public void study(String JarPath) throws IOException {
         List<Object> ClassGotten = otherPersonality.loadClasses(JarPath);
 
-        for (Object o : ClassGotten){
+        for (Object o : ClassGotten) {
             try {
                 Language lang = (Language) o;
                 Languages.add(lang);
-            } catch (Exception e) {/* Skip Aja Lah Kalo Merusak */}
+            } catch (Exception e) {
+                /* Skip Aja Lah Kalo Merusak */}
         }
     }
 
-    private GameState loadGameState(Language lang, String folderPath) throws FileNotFoundException{
+    private GameState loadGameState(Language lang, String folderPath) throws FileNotFoundException {
         File gameStateFile = new File(folderPath + File.separator + "gamestate." + lang.getExtension());
 
         StringBuilder content = new StringBuilder();
@@ -124,14 +132,15 @@ public class Librarian {
 
         Map<String, Integer> finalShopItems = new HashMap<>();
 
-        for (Map<String, String> shopItem : shopItems){
+        for (Map<String, String> shopItem : shopItems) {
             finalShopItems.put(shopItem.get("NAMA_PRODUK"), Integer.valueOf(shopItem.get("JUMLAH_PRODUK")));
         }
 
         return new GameState(Integer.parseInt((String) resultMap.get("CURRENT_TURN")), finalShopItems);
     }
 
-    private PlayerState loadPlayerState(Language lang, String folderPath, int playerNumber) throws FileNotFoundException, DeckPenuhException, DiluarPetakException {
+    private PlayerState loadPlayerState(Language lang, String folderPath, int playerNumber)
+            throws FileNotFoundException, DeckPenuhException, DiluarPetakException {
         File playerFile = new File(folderPath + File.separator + "player" + playerNumber + "." + lang.getExtension());
 
         StringBuilder content = new StringBuilder();
@@ -149,10 +158,10 @@ public class Librarian {
         List<Map<String, String>> active_deck_cards = (List<Map<String, String>>) resultMap.get("ACTIVE_DECK_CARDS");
 
         Deck activeDeck = new Deck(6);
-        for(int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             char code = (char) ('A' + i);
-            for (Map<String, String> map : active_deck_cards){
-                if (map.get("LOKASI_KARTU").equals(code + "01")){
+            for (Map<String, String> map : active_deck_cards) {
+                if (map.get("LOKASI_KARTU").equals(code + "01")) {
                     activeDeck.insertKartu(FactoryKartu.getKartu(map.get("NAMA_KARTU")));
                 }
             }
@@ -162,10 +171,10 @@ public class Librarian {
 
         PetakLadangCodeAdapter petakLadangCodeAdapter = new PetakLadangCodeAdapter();
 
-        for (Map<String, Object> ladang_card : ladang_cards){
+        for (Map<String, Object> ladang_card : ladang_cards) {
             Makhluk maboi = (Makhluk) FactoryKartu.getKartu(((String) ladang_card.get("NAMA_KARTU")));
 
-            if (ladang_card.get("PROGRESS_PANEN").getClass() == Integer.class){
+            if (ladang_card.get("PROGRESS_PANEN").getClass() == Integer.class) {
                 maboi.setProgressPanen((Integer) ladang_card.get("PROGRESS_PANEN"));
             } else {
                 maboi.setProgressPanen(Integer.parseInt((String) ladang_card.get("PROGRESS_PANEN")));

@@ -16,15 +16,15 @@ public class ShuffleController {
     private List<Kartu> dealedCard;
     private ShufflePage thePage = new ShufflePage(this);
 
-    public Deck getCurrentDeck(){
+    public Deck getCurrentDeck() {
         return GameEngine.getInstance().getCurrentPemain().getDeck();
     }
 
-    public Deck getCurrentDeckAktif(){
+    public Deck getCurrentDeckAktif() {
         return GameEngine.getInstance().getCurrentPemain().getDeckAktif();
     }
 
-    public void enterShuffle(){
+    public void enterShuffle() {
         try {
             getCurrentDeck().addRandom(4);
         } catch (DeckPenuhException e) {
@@ -34,7 +34,7 @@ public class ShuffleController {
         dealCards();
     }
 
-    public void dealCards(){
+    public void dealCards() {
         dealedCard = new ArrayList<>();
         try {
             getCurrentDeck().shuffle();
@@ -44,7 +44,9 @@ public class ShuffleController {
 
         int last_dealed_amount = Math.min(getCurrentDeckAktif().remainingSlot(), 4);
 
-        if (last_dealed_amount > getCurrentDeck().size()) {last_dealed_amount = getCurrentDeck().size();}
+        if (last_dealed_amount > getCurrentDeck().size()) {
+            last_dealed_amount = getCurrentDeck().size();
+        }
 
         try {
             dealedCard = getCurrentDeck().takeNTopKartu(last_dealed_amount);
@@ -54,7 +56,7 @@ public class ShuffleController {
         thePage.showCards(dealedCard);
     }
 
-    public void reshuffleHandler(){
+    public void reshuffleHandler() {
         try {
             getCurrentDeck().insertBanyakKartu(dealedCard);
         } catch (DeckPenuhException e) {
@@ -63,7 +65,7 @@ public class ShuffleController {
         dealCards();
     }
 
-    public void acceptHandler(){
+    public void acceptHandler() {
         try {
             getCurrentDeckAktif().insertBanyakKartu(dealedCard);
         } catch (DeckPenuhException e) {

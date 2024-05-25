@@ -18,14 +18,14 @@ public class PopupInfoController {
     private int last_y;
     private boolean last_from_ladang;
 
-    public void popupCard(int x, int y, boolean fromLadang){
+    public void popupCard(int x, int y, boolean fromLadang) {
 
         last_from_ladang = fromLadang;
         last_x = x;
         last_y = y;
         Kartu kartu;
 
-        if (fromLadang){
+        if (fromLadang) {
             kartu = getFromPetakLadang(x, y);
         } else {
             kartu = getFromDeckAktif(x, y);
@@ -36,15 +36,16 @@ public class PopupInfoController {
         currentPopup.show();
     }
 
-    public void handleKembali(){
+    public void handleKembali() {
         currentPopup.hide();
         App.getMainPage().phaseIn();
     }
 
-    public void handlePanen(){
-        try{
+    public void handlePanen() {
+        try {
             GameEngine.getInstance().getCurrentPemain().panenPetak(last_x, last_y);
             currentPopup.hide();
+            App.getMainPage().phaseIn();
         } catch (BerusahaPanenMakhlukGaibException | DiluarPetakException e) {
             throw new RuntimeException(e);
         } catch (BelumSiapPanenException | DeckPenuhException e) {
@@ -52,7 +53,7 @@ public class PopupInfoController {
         }
     }
 
-    private Makhluk getFromPetakLadang(int x, int y){
+    private Makhluk getFromPetakLadang(int x, int y) {
         try {
             return GameEngine.getInstance().getCurrentPemain().getPetakLadang().getMakhluk(x, y);
         } catch (DiluarPetakException e) {
@@ -60,7 +61,7 @@ public class PopupInfoController {
         }
     }
 
-    private Kartu getFromDeckAktif(int x, int y){
+    private Kartu getFromDeckAktif(int x, int y) {
         try {
             return GameEngine.getInstance().getCurrentPemain().getDeckAktif().peekKartuAt(x);
         } catch (DeckOutOfBoundsException | DeckEmptyException e) {
