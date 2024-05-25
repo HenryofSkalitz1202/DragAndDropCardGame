@@ -9,6 +9,8 @@ import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Makhluk.Exception.BelumSiapPanenException;
 import com.hbd.Pemain.Exception.BerusahaMemberiItemKeMakhlukGaibException;
 import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
+import com.hbd.Kartu.Makhluk.Exception.SalahMakanException;
+import com.hbd.Kartu.Makhluk.Hewan;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.Kartu.Makhluk.Tanaman;
 import com.hbd.Kartu.Produk.Produk;
@@ -175,6 +177,21 @@ public class Pemain {
             if (tanaman.getClass() == Tanaman.class) {
                 ((Tanaman) tanaman).tambahUmurSatu();
             }
+        }
+    }
+
+    public void kasihMamam(Pemain aktor, Produk makanan, int x, int y)
+            throws DiluarPetakException, SalahMakanException {
+        Makhluk makhluk = petakLadang.getMakhluk(x, y);
+        Hewan ternak;
+        if (makhluk == null) {
+            throw new DiluarPetakException("Tidak ada makhluk di petak ini");
+        }
+        if (makhluk instanceof Hewan) {
+            ternak = (Hewan) makhluk;
+            ternak.makan(makanan);
+        } else {
+            throw new SalahMakanException("Makhluk ini tidak bisa makan");
         }
     }
 }

@@ -9,6 +9,7 @@ import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Item.Item;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
+import com.hbd.Kartu.Makhluk.Exception.SalahMakanException;
 import com.hbd.Kartu.Produk.Produk;
 import com.hbd.Pemain.Pemain;
 import com.hbd.Pemain.Exception.BerusahaMemberiItemKeMakhlukGaibException;
@@ -153,6 +154,15 @@ public class MainController {
                 } catch (DiluarPetakException | DeckPenuhException | DeckOutOfBoundsException | IllegalItemException
                         | ItemTidakAdaException | DeckEmptyException
                         | BerusahaMemberiItemKeMakhlukGaibException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            if (kartu instanceof Produk) {
+                try {
+                    getCurrentPemain().kasihMamam(getCurrentPemain(), (Produk) kartu, column, row);
+                    getCurrentDeckAktif().takeKartuAt(initialColumn);
+                } catch (DiluarPetakException | SalahMakanException | DeckEmptyException | DeckOutOfBoundsException e) {
                     System.out.println(e.getMessage());
                 }
             }

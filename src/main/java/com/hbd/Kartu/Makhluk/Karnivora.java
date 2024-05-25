@@ -10,8 +10,8 @@ public class Karnivora extends Hewan {
         super(nama, maksPanen, hasilPanen);
     }
 
-    public void makan(Produk makanan) throws SalahMakanException{
-        if (makanan.getClass() != ProdukHewan.class){
+    public void makan(Produk makanan) throws SalahMakanException {
+        if (makanan.getClass() != ProdukHewan.class) {
             throw new SalahMakanException("Karnivora tidak bisa memakan produk tumbuhan");
         }
         setProgressPanen(getProgressPanen() + makanan.getTambahanBerat());
