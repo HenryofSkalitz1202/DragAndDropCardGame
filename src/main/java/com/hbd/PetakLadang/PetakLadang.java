@@ -71,6 +71,13 @@ public class PetakLadang implements Iterable<Makhluk> {
         this.ladang.get(y).set(x, makhluk);
     }
 
+    public void setNull(int x, int y) throws DiluarPetakException {
+        if (x >= lebar || x < 0 || y >= tinggi || y < 0){
+            throw new DiluarPetakException("Ada usaha untuk akses petak di luar ladang");
+        }
+        this.ladang.get(y).set(x, null);
+    }
+
     public boolean hasAny(Method func) throws Exception {
         for (Makhluk makhluk : this) {
             if (makhluk == null) {

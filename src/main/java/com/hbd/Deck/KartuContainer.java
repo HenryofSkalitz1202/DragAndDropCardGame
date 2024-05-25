@@ -86,6 +86,14 @@ public class KartuContainer implements Iterable<Kartu> {
         
         return result;
     }
+
+    public boolean isEmpty(){
+        return size() == 0;
+    }
+
+    public boolean isFull(){
+        return size() == capacity;
+    }
     
     public void insertKartu(Kartu kartu) throws DeckPenuhException {
         if (size() == capacity) {throw new DeckPenuhException("Deck sudah penuh");}

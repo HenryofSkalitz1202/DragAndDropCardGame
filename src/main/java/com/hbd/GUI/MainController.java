@@ -78,6 +78,12 @@ public class MainController {
         else {
             App.getMainPage().switchTo();
         }
+
+        try{
+            App.getMainPage().bearAttack();
+        }catch (Exception e) {
+            // Handle any exceptions
+        }
     }
 
     public void LetGoHandler(Kartu makhluk, int row, int column, int initialRow, int initialColumn, boolean fromLadang, boolean toLadang) throws DiluarPetakException {

@@ -1,12 +1,11 @@
 package com.hbd;
 
-public class TestClock implements Runnable {
+import com.hbd.GUI.BearAttack;
+public class Clock implements Runnable {
     private int countdownSeconds;
-    private CountdownWindow window;
 
-    public TestClock(int countdownSeconds, CountdownWindow window) {
+    public Clock(int countdownSeconds) {
         this.countdownSeconds = countdownSeconds;
-        this.window = window;
     }
 
     @Override
@@ -20,10 +19,10 @@ public class TestClock implements Runnable {
                 long seconds = (remainingTime / 1000) % 60;
                 long millis = (remainingTime % 1000) / 100;
                 String timeString = String.format("%02d.%01d", seconds, millis);
-
-                window.updateTime(timeString);
+                BearAttack.updateLabel(timeString);
             } else {
-                window.updateTime("00.0");
+                BearAttack.updateLabel("Waktu HABIS!!!");
+                BearAttack.stopTimer(); // Signal the main thread that the timer has finished
                 break;
             }
 
