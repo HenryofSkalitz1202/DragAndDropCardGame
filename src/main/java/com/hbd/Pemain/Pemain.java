@@ -9,6 +9,8 @@ import com.hbd.Kartu.Kartu;
 import com.hbd.Kartu.Makhluk.Exception.BelumSiapPanenException;
 import com.hbd.Pemain.Exception.BerusahaMemberiItemKeMakhlukGaibException;
 import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
+import com.hbd.Kartu.Makhluk.Exception.SalahMakanException;
+import com.hbd.Kartu.Makhluk.Hewan;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.Kartu.Makhluk.Tanaman;
 import com.hbd.Kartu.Produk.Produk;
@@ -50,14 +52,15 @@ public class Pemain {
         return duit;
     }
 
-    public void setDeckSize(int n){
+    public void setDeckSize(int n) {
         deck = new Deck();
         try {
             deck.addRandom(n);
-        } catch (DeckPenuhException e) {/* Actually Impossible */}
+        } catch (DeckPenuhException e) {
+            /* Actually Impossible */}
     }
 
-    public void setDeckAktif(Deck _deckAktif){
+    public void setDeckAktif(Deck _deckAktif) {
         deckAktif = _deckAktif;
     }
 
@@ -88,8 +91,8 @@ public class Pemain {
             throw new BerusahaMemberiItemKeMakhlukGaibException("Anda berusaha memberi item ke makluk gaib");
         }
 
-        if (aktor != this) {
-            if (!(item.getNama().equals("Destroy") || item.getNama().equals("Delay"))) {
+        if (aktor == this) {
+            if ((item.getNama().equals("Destroy") || item.getNama().equals("Delay"))) {
                 throw new IllegalItemException("Anda tidak boleh menggunakan item itu pada ladang ini");
             }
         }
@@ -174,6 +177,21 @@ public class Pemain {
             if (tanaman.getClass() == Tanaman.class) {
                 ((Tanaman) tanaman).tambahUmurSatu();
             }
+        }
+    }
+
+    public void kasihMamam(Pemain aktor, Produk makanan, int x, int y)
+            throws DiluarPetakException, SalahMakanException {
+        Makhluk makhluk = petakLadang.getMakhluk(x, y);
+        Hewan ternak;
+        if (makhluk == null) {
+            throw new DiluarPetakException("Tidak ada makhluk di petak ini");
+        }
+        if (makhluk instanceof Hewan) {
+            ternak = (Hewan) makhluk;
+            ternak.makan(makanan);
+        } else {
+            throw new SalahMakanException("Makhluk ini tidak bisa makan");
         }
     }
 }
