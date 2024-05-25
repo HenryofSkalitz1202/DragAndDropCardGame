@@ -83,4 +83,14 @@ public class Toko {
         tambahItemKeToko(produk);
         return produk.getHarga();
     }
+
+    public int getJumlah(Produk produk){
+        int ret;
+        try{
+            ret = itemToko.get(produk);
+        }catch(Exception e){
+            ret = 0;
+        }
+        return ret;
+    }
 }

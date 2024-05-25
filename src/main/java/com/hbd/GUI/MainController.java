@@ -1,5 +1,6 @@
 package com.hbd.GUI;
 
+import com.hbd.GUI.TampilanToko;
 import com.hbd.Deck.Deck;
 import com.hbd.Deck.Exception.DeckEmptyException;
 import com.hbd.Deck.Exception.DeckOutOfBoundsException;
@@ -54,7 +55,8 @@ public class MainController {
 
     @FXML
     private void ButtonToko(ActionEvent event) {
-        ;
+        TampilanToko toko = new TampilanToko();
+        App.getPane().getChildren().add(toko);
     }
 
     @FXML
