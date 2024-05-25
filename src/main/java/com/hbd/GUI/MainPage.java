@@ -3,8 +3,6 @@ package com.hbd.GUI;
 import com.hbd.Deck.Deck;
 import com.hbd.Deck.Exception.DeckEmptyException;
 import com.hbd.Deck.Exception.DeckOutOfBoundsException;
-import com.hbd.Deck.Exception.DeckPenuhException;
-import com.hbd.GameEngine;
 import com.hbd.Kartu.FactoryKartu;
 import com.hbd.Kartu.Makhluk.Makhluk;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
@@ -15,12 +13,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class MainPage extends Application {
     private Scene scene;
     private List<KartuGUI> pageKartu = new ArrayList<>();
     private AnchorPane currentPane;
-    boolean hasStarted = false;
+    private boolean phasedOut = false;
 
     private MainController controller;
 
@@ -58,7 +60,6 @@ public class MainPage extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        hasStarted = true;
         controller = new MainController();
         controller.initializeGame();
 
@@ -185,7 +186,7 @@ public class MainPage extends Application {
             int id_y = (int)((card_middle_y - BASE_LADANG_Y)/LADANG_TILE_HEIGHT);
 
             try {
-                controller.LetGoHandler((Makhluk) k.getKartu(), id_y, id_x, initial_y_id, initial_x_id, fromLadang, true);
+                controller.LetGoHandler(k.getKartu(), id_y, id_x, initial_y_id, initial_x_id, fromLadang, true);
             } catch (DiluarPetakException e) {throw new RuntimeException("WAA HOW");}
         } else if (card_middle_x >= BASE_DECK_AKTIF_X && card_middle_x <= BASE_DECK_AKTIF_X + WIDTH_DECK_AKTIF && card_middle_y <= BASE_DECK_AKTIF_Y + HEIGHT_DECK_AKTIF && card_middle_y >= BASE_DECK_AKTIF_Y) {
 
@@ -200,17 +201,21 @@ public class MainPage extends Application {
             } catch (DiluarPetakException e) {throw new RuntimeException("WAA HOW");}
         }
 
+        if (!phasedOut){
+            getCard();
+            updateCard();
+        }
+    }
+
+    public void updateCard(){
+
         for (int i = 0; i < currentPane.getChildren().size(); i++){
             if (currentPane.getChildren().get(i).getClass() == Rectangle.class){
                 currentPane.getChildren().remove(i);
                 i--;
             }
         }
-        getCard();
-        updateCard();
-    }
 
-    public void updateCard(){
         for (KartuGUI k: pageKartu) {
             currentPane.getChildren().add(k.getRect());
             k.getRect().setOnMousePressed(event -> pressed(event, k));
@@ -248,6 +253,62 @@ public class MainPage extends Application {
     }
 
     public MainController getController() {return controller;}
+
+    public void phaseOut(){
+        phasedOut = true;
+        disableInteraction();
+        ColorAdjust adj = new ColorAdjust(0.0, 0, -0.4, 0);
+        GaussianBlur blur = new GaussianBlur(4);
+        adj.setInput(blur);
+
+        for (Node n : currentPane.getChildren()){
+            n.setEffect(adj);
+        }
+    }
+
+    private void disableInteraction(){
+        for (KartuGUI k: pageKartu) {
+            k.getRect().setOnMousePressed(null);
+            k.getRect().setOnMouseDragged(null);
+            k.getRect().setOnMouseReleased(null);
+        }
+
+        for (Node btn : ((Pane)((Pane) currentPane.getChildren().get(2)).getChildren().get(2)).getChildren()){
+            btn.setDisable(false);
+        }
+        ((Pane) ((Pane) ((Pane) currentPane.getChildren().get(2)).getChildren().get(1)).getChildren().get(0)).getChildren().get(1).setDisable(false);
+    }
+
+    public void phaseIn(){
+        for (Node n : currentPane.getChildren()){
+            n.setEffect(null);
+        }
+        enableInteraction();
+        phasedOut = false;
+        getCard();
+        updateCard();
+    }
+
+    public void enableInteraction(){
+        for (KartuGUI k: pageKartu) {
+            k.getRect().setOnMousePressed(event -> pressed(event, k));
+            k.getRect().setOnMouseDragged(event -> dragged(event, k));
+            k.getRect().setOnMouseReleased(event -> released(event, k));
+        }
+
+        for (Node btn : ((Pane)((Pane) currentPane.getChildren().get(2)).getChildren().get(2)).getChildren()){
+            btn.setDisable(false);
+        }
+        ((Pane) ((Pane) ((Pane) currentPane.getChildren().get(2)).getChildren().get(1)).getChildren().get(0)).getChildren().get(1).setDisable(false);
+    }
+
+    public Pair<Integer, Integer> ScreenCoordinateToLadang(Double x, Double y){
+        return new Pair<>((int)((x - BASE_LADANG_X)/LADANG_TILE_WIDTH), (int)((y - BASE_LADANG_Y)/LADANG_TILE_HEIGHT));
+    }
+
+    public Pair<Double, Double> LadangCoordinateToScreen(int x, int y){
+        return new Pair<>(BASE_LADANG_X + x*LADANG_TILE_WIDTH, BASE_LADANG_Y + y*LADANG_TILE_HEIGHT);
+    }
 
     public static void main(String[] args) {
         launch();
