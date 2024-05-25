@@ -11,11 +11,11 @@ import org.testfx.framework.junit5.ApplicationTest;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 
-public class SaveStateControllerTest extends ApplicationTest {
+public class LoadStateControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hbd/GUI/SaveState.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hbd/GUI/loadstate.fxml"));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
