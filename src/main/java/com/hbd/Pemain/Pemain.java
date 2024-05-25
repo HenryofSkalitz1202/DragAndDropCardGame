@@ -50,14 +50,15 @@ public class Pemain {
         return duit;
     }
 
-    public void setDeckSize(int n){
+    public void setDeckSize(int n) {
         deck = new Deck();
         try {
             deck.addRandom(n);
-        } catch (DeckPenuhException e) {/* Actually Impossible */}
+        } catch (DeckPenuhException e) {
+            /* Actually Impossible */}
     }
 
-    public void setDeckAktif(Deck _deckAktif){
+    public void setDeckAktif(Deck _deckAktif) {
         deckAktif = _deckAktif;
     }
 
@@ -88,8 +89,8 @@ public class Pemain {
             throw new BerusahaMemberiItemKeMakhlukGaibException("Anda berusaha memberi item ke makluk gaib");
         }
 
-        if (aktor != this) {
-            if (!(item.getNama().equals("Destroy") || item.getNama().equals("Delay"))) {
+        if (aktor == this) {
+            if ((item.getNama().equals("Destroy") || item.getNama().equals("Delay"))) {
                 throw new IllegalItemException("Anda tidak boleh menggunakan item itu pada ladang ini");
             }
         }

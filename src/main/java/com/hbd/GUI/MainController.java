@@ -6,7 +6,13 @@ import com.hbd.Deck.Exception.DeckOutOfBoundsException;
 import com.hbd.Deck.Exception.DeckPenuhException;
 import com.hbd.GameEngine;
 import com.hbd.Kartu.Kartu;
+import com.hbd.Kartu.Item.Item;
 import com.hbd.Kartu.Makhluk.Makhluk;
+import com.hbd.Kartu.Makhluk.Exception.ItemTidakAdaException;
+import com.hbd.Kartu.Produk.Produk;
+import com.hbd.Pemain.Pemain;
+import com.hbd.Pemain.Exception.BerusahaMemberiItemKeMakhlukGaibException;
+import com.hbd.Pemain.Exception.IllegalItemException;
 import com.hbd.PetakLadang.Exception.DiluarPetakException;
 import com.hbd.PetakLadang.PetakLadang;
 import javafx.event.ActionEvent;
@@ -139,8 +145,22 @@ public class MainController {
     private void PlaceToLadang(Kartu kartu, int row, int column, int initialRow, int initialColumn)
             throws DiluarPetakException {
         if (getCurrentPetakLadang().getMakhluk(column, row) != null) {
+            if (kartu instanceof Item) {
+                try {
+                    getCurrentPemain().beriItemKeLadang(getCurrentPemain(), (Item) kartu, column, row);
+                    getCurrentDeckAktif().takeKartuAt(initialColumn);
+
+                } catch (DiluarPetakException | DeckPenuhException | DeckOutOfBoundsException | IllegalItemException
+                        | ItemTidakAdaException | DeckEmptyException
+                        | BerusahaMemberiItemKeMakhlukGaibException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
             return;
         } else {
+            if (kartu instanceof Item || kartu instanceof Produk) {
+                return;
+            }
             getCurrentPetakLadang().setMakhluk(column, row, (Makhluk) kartu);
             try {
                 getCurrentDeckAktif().takeKartuAt(initialColumn);
@@ -194,5 +214,9 @@ public class MainController {
 
     public int getCurrentPlayer2Duit() {
         return GameEngine.getInstance().getPlayer2Duit();
+    }
+
+    public Pemain getCurrentPemain() {
+        return GameEngine.getInstance().getCurrentPemain();
     }
 }
