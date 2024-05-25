@@ -127,7 +127,7 @@ public class MainController {
 
     public void LetGoHandler(Kartu kartu, int row, int column, int initialRow, int initialColumn, boolean fromLadang,
             boolean toLadang) throws DiluarPetakException {
-        if (row == initialRow && column == initialColumn) {
+        if (row == initialRow && column == initialColumn && (fromLadang == toLadang)) {
             App.popupInfoController.popupCard(column, row, fromLadang);
             return;
         }

@@ -95,36 +95,19 @@ public class BearAttack {
     public static void startAttack(int countdownSeconds, MainPage mainPage) {
         timerRunning = true;
 
-        // Start the countdown clock
+        List<int[]> attackedCells = generateAttackedCells();
+        
         Thread runner = new Thread(new Clock(countdownSeconds));
         runner.start();
 
-        // Update cards and handle attack after countdown
         inputTask = executorService.submit(() -> {
             int remainingSeconds = countdownSeconds;
-            while (timerRunning && remainingSeconds > 0) {
-                try {
-                    Thread.sleep(1000); // Wait 1 second
-                    remainingSeconds--;
-                    final int seconds = remainingSeconds;
-                    Platform.runLater(() -> {
-                        // Update the time label
-                        if (timeLabel != null) {
-                            timeLabel.setText("Time remaining: " + seconds + " seconds");
-                        }
-                        // mainPage.loadCard(); // Update UI
-                    });
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
+            while (timerRunning && remainingSeconds > 0) {}
 
-            // Execute the attack on the JavaFX thread
             Platform.runLater(() -> {
                 try {
-                    List<int[]> attackedCells = generateAttackedCells();
                     attack(mainPage.getController().getCurrentPetakLadang(), mainPage.getController().getCurrentDeckAktif(), attackedCells);
-                    mainPage.loadCard(); // Refresh the UI after the attack
+                    mainPage.loadCard();
                 } catch (Exception e) {
                     System.out.println("Error during bear attack: " + e.getMessage());
                 }
