@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 // import javafx.stage.Stage;
 
 public class LoadStateController {
-    private static Stage popupwindow;
 
     @FXML
     private TextField format;
@@ -20,7 +19,6 @@ public class LoadStateController {
     @FXML
     public void HandlePopUp(ActionEvent event) {
         System.out.println("HandlePopUp");
-        popupwindow.close();
     }
 
     @FXML
@@ -28,7 +26,10 @@ public class LoadStateController {
         System.out.println("SubmitLoadState");
         System.out.println("Formatnya " + format.getText());
         System.out.println("Foldernya " + folder.getText());
-        popupwindow.close();
+
+        // Close the stage
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 }
 
