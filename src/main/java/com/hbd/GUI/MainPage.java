@@ -286,8 +286,6 @@ public class MainPage extends Application {
         currentPane.getChildren().add(timeLabel);
         BearAttack.setTimeLabel(timeLabel);
 
-        List<int[]> attackedCells = BearAttack.generateAttackedCells();
-
         // Start the attack countdown
         BearAttack.startAttack(countdownSeconds, this);
     }
