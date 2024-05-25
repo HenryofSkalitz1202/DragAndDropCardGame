@@ -222,24 +222,12 @@ public class MainPage extends Application {
     }
 
     public void updateCard(){
-
         for (int i = 0; i < currentPane.getChildren().size(); i++){
             if (currentPane.getChildren().get(i).getClass() == Rectangle.class){
                 currentPane.getChildren().remove(i);
                 i--;
             }
         }
-        getCard();
-        updateCard();
-    }
-
-    public Pair<Integer, Integer> ScreenCoordinateToLadang(Double x, Double y){
-        return new Pair<>((int)((x - BASE_LADANG_X)/LADANG_TILE_WIDTH), (int)((y - BASE_LADANG_Y)/LADANG_TILE_HEIGHT));
-    }
-    
-    public Pair<Double, Double> LadangCoordinateToScreen(int x, int y){
-        return new Pair<>(BASE_LADANG_X + x*LADANG_TILE_WIDTH, BASE_LADANG_Y + y*LADANG_TILE_HEIGHT);
-    }
 
         for (KartuGUI k: pageKartu) {
             currentPane.getChildren().add(k.getRect());
